@@ -1,0 +1,72 @@
+@startuml CU03_ConsolidarCierreDeCaja
+title Consolidar Cierre de Caja
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state CIERRES_ABIERTO_INICIAL as "CIERRES_ABIERTO"
+state CIERRE_ABIERTO as "CIERRE_ABIERTO"
+state CIERRES_ABIERTO_FINAL as "CIERRES_ABIERTO"
+
+[*] -[#green]-> CIERRES_ABIERTO_INICIAL
+
+CIERRES_ABIERTO_INICIAL -[#green]-> CIERRE_ABIERTO : abrirCierreDeCaja()
+note left on link
+    <b>Taquillero solicita</b> consolidar el cierre del día,
+    o <b>Sistema genera</b> automáticamente el cierre
+    al final de la jornada.
+    <b>Sistema presenta</b> el resumen del día.
+end note
+
+state CIERRE_ABIERTO {
+    state VisualizacionCierre as "Visualización de Cierre"
+    state EdicionCierre as "Edición de Cierre"
+    state ConfirmacionCierre as "Confirmación de Cierre"
+
+    [*] -[#green]-> VisualizacionCierre
+    note right of VisualizacionCierre
+        <b>Sistema muestra</b> el resumen del día:
+        ventas registradas, reembolsos y
+        reportes de motorarios (solo lectura).
+        <b>Sistema permite solicitar</b> editar mediante
+        editarCierre() o confirmar directamente.
+    end note
+
+    VisualizacionCierre -[#green]-> EdicionCierre : editarCierre()
+    note right of EdicionCierre
+        <b>Taquillero puede modificar</b> datos de ventas
+        y añadir observaciones manuales.
+        <b>Los reportes de motorarios</b> son de solo lectura.
+        <b>Sistema valida</b> los datos introducidos.
+    end note
+
+    EdicionCierre -[#green]-> ConfirmacionCierre : guardarCambios()
+    VisualizacionCierre -[#green]-> ConfirmacionCierre : confirmarCierre()
+    note right of ConfirmacionCierre
+        <b>Sistema actualiza</b> el cierre con los cambios.
+        <b>Sistema marca</b> el cierre como pendiente
+        de revisión por el Supervisor.
+    end note
+
+    ConfirmacionCierre -[#green]-> [*]
+}
+
+CIERRE_ABIERTO -[#green]-> CIERRES_ABIERTO_FINAL : confirmarCierre()
+note left on link
+    <b>Taquillero solicita</b> consolidar el cierre.
+    <b>Sistema registra</b> el cierre como consolidado
+    y notifica al Supervisor.
+end note
+
+CIERRE_ABIERTO -[#red]-> CIERRES_ABIERTO_FINAL : cancelarCierre()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Taquillero solicita</b> salir sin consolidar.
+    <b>Sistema descarta</b> los cambios no guardados
+    y mantiene el cierre en estado pendiente.
+end note
+
+CIERRES_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

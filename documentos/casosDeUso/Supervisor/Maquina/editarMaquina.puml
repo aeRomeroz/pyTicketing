@@ -1,0 +1,71 @@
+@startuml CU21_EditarMaquina
+title Editar Máquina
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state MAQUINAS_ABIERTO_INICIAL as "MAQUINAS_ABIERTO"
+state MAQUINA_ABIERTA as "MAQUINA_ABIERTA"
+state MAQUINAS_ABIERTO_FINAL as "MAQUINAS_ABIERTO"
+
+[*] -[#green]-> MAQUINAS_ABIERTO_INICIAL
+
+MAQUINAS_ABIERTO_INICIAL -[#green]-> MAQUINA_ABIERTA : editarMaquina()
+note left on link
+    <b>Supervisor solicita</b> editar los datos
+    de una máquina existente.
+    <b>Sistema presenta</b> el formulario de edición
+    con los datos actuales precargados.
+end note
+
+state MAQUINA_ABIERTA {
+    state EdicionMaquina as "Edición de Máquina"
+    state EdicionTiposTicket as "Edición de Tipos de Ticket"
+    state ConfirmacionMaquina as "Confirmación de Máquina"
+
+    [*] -[#green]-> EdicionMaquina
+    note right of EdicionMaquina
+        <b>Supervisor modifica</b> los datos
+        de la máquina (nombre, tipoRestriccion).
+        <b>Sistema valida</b> los datos introducidos.
+    end note
+
+    EdicionMaquina -[#green]-> EdicionTiposTicket : editarTiposTicket()
+    EdicionMaquina -[#green]-> ConfirmacionMaquina : guardarMaquina()
+
+    note right of EdicionTiposTicket
+        <b>[Opcional]</b> <b>Supervisor modifica</b> los tipos
+        de ticket disponibles (niño, adulto o ambos)
+        y sus precios.
+        <b>Sistema valida</b> que al menos un
+        tipo de ticket esté definido.
+    end note
+
+    EdicionTiposTicket -[#green]-> ConfirmacionMaquina : guardarMaquina()
+
+    note right of ConfirmacionMaquina
+        <b>Sistema registra</b> los cambios
+        de la máquina y sus tipos de ticket.
+    end note
+
+    ConfirmacionMaquina -[#green]-> [*]
+}
+
+MAQUINA_ABIERTA -[#green]-> MAQUINAS_ABIERTO_FINAL : confirmarEdicion()
+note left on link
+    <b>Sistema confirma</b> los cambios guardados
+    y regresa al listado de máquinas.
+end note
+
+MAQUINA_ABIERTA -[#red]-> MAQUINAS_ABIERTO_FINAL : cancelarEdicion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Supervisor solicita</b> salir sin guardar.
+    <b>Sistema descarta</b> los cambios introducidos
+    y regresa al listado de máquinas.
+end note
+
+MAQUINAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

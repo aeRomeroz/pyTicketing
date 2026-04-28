@@ -1,0 +1,68 @@
+@startuml CU16_AsignarTaquilleroAPlaza
+title Asignar Taquillero a Plaza
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
+state ASIGNACION_ABIERTA as "ASIGNACION_ABIERTA"
+state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+
+[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+
+PLAZAS_ABIERTO_INICIAL -[#green]-> ASIGNACION_ABIERTA : asignarTaquilleroAPlaza()
+note left on link
+    <b>Supervisor solicita</b> asignar un taquillero
+    a una plaza.
+    <b>Sistema presenta</b> el formulario de asignación
+    con los taquilleros y plazas activas disponibles.
+end note
+
+state ASIGNACION_ABIERTA {
+    state SeleccionTaquillero as "Selección de Taquillero"
+    state SeleccionPlaza as "Selección de Plaza"
+    state ConfirmacionAsignacion as "Confirmación de Asignación"
+
+    [*] -[#green]-> SeleccionTaquillero
+    note right of SeleccionTaquillero
+        <b>Sistema muestra</b> los taquilleros activos
+        sin plaza asignada.
+        <b>Supervisor solicita</b> seleccionar
+        un taquillero.
+    end note
+
+    SeleccionTaquillero -[#green]-> SeleccionPlaza : seleccionarTaquillero()
+    note right of SeleccionPlaza
+        <b>Sistema muestra</b> las plazas activas
+        disponibles.
+        <b>Supervisor solicita</b> seleccionar
+        una plaza.
+    end note
+
+    SeleccionPlaza -[#green]-> ConfirmacionAsignacion : seleccionarPlaza()
+    note right of ConfirmacionAsignacion
+        <b>Sistema vincula</b> el taquillero
+        a la plaza seleccionada.
+    end note
+
+    ConfirmacionAsignacion -[#green]-> [*]
+}
+
+ASIGNACION_ABIERTA -[#green]-> PLAZAS_ABIERTO_FINAL : confirmarAsignacion()
+note left on link
+    <b>Sistema confirma</b> la asignación realizada
+    y regresa al listado de plazas.
+end note
+
+ASIGNACION_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cancelarAsignacion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Supervisor solicita</b> cancelar la operación.
+    <b>Sistema descarta</b> la asignación
+    y regresa al listado de plazas.
+end note
+
+PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

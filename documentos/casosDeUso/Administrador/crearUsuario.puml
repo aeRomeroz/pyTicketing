@@ -1,0 +1,57 @@
+@startuml CU07_CrearUsuario
+title Crear Usuario
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state USUARIOS_ABIERTO_INICIAL as "USUARIOS_ABIERTO"
+state USUARIO_ABIERTO as "USUARIO_ABIERTO"
+state USUARIOS_ABIERTO_FINAL as "USUARIOS_ABIERTO"
+
+[*] -[#green]-> USUARIOS_ABIERTO_INICIAL
+
+USUARIOS_ABIERTO_INICIAL -[#green]-> USUARIO_ABIERTO : crearUsuario()
+note left on link
+    <b>Administrador solicita</b> crear un nuevo usuario.
+    <b>Sistema presenta</b> el formulario de creación.
+end note
+
+state USUARIO_ABIERTO {
+    state FormularioUsuario as "Formulario de Usuario"
+    state ConfirmacionUsuario as "Confirmación de Usuario"
+
+    [*] -[#green]-> FormularioUsuario
+    note right of FormularioUsuario
+        <b>Administrador introduce</b> los datos
+        del usuario (nombre, contraseña, rol).
+        <b>Sistema valida</b> que los datos
+        sean correctos y el rol válido.
+    end note
+
+    FormularioUsuario -[#green]-> ConfirmacionUsuario : guardarUsuario()
+    note right of ConfirmacionUsuario
+        <b>Sistema registra</b> el nuevo usuario.
+        <b>Sistema asigna</b> el rol correspondiente.
+    end note
+
+    ConfirmacionUsuario -[#green]-> [*]
+}
+
+USUARIO_ABIERTO -[#green]-> USUARIOS_ABIERTO_FINAL : confirmarCreacion()
+note left on link
+    <b>Sistema confirma</b> el usuario creado
+    y regresa al listado de usuarios.
+end note
+
+USUARIO_ABIERTO -[#red]-> USUARIOS_ABIERTO_FINAL : cancelarCreacion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Administrador solicita</b> cancelar la operación.
+    <b>Sistema descarta</b> los datos introducidos
+    y regresa al listado de usuarios.
+end note
+
+USUARIOS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

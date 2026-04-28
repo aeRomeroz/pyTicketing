@@ -1,0 +1,56 @@
+@startuml CU11_RegistrarPlaza
+title Registrar Plaza
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
+state PLAZA_ABIERTA as "PLAZA_ABIERTA"
+state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+
+[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+
+PLAZAS_ABIERTO_INICIAL -[#green]-> PLAZA_ABIERTA : registrarPlaza()
+note left on link
+    <b>Supervisor solicita</b> registrar una nueva plaza.
+    <b>Sistema presenta</b> el formulario de creación.
+end note
+
+state PLAZA_ABIERTA {
+    state FormularioPlaza as "Formulario de Plaza"
+    state ConfirmacionPlaza as "Confirmación de Plaza"
+
+    [*] -[#green]-> FormularioPlaza
+    note right of FormularioPlaza
+        <b>Supervisor introduce</b> los datos
+        de la plaza (nombre, ciudad, estado).
+        <b>Sistema valida</b> los datos introducidos.
+    end note
+
+    FormularioPlaza -[#green]-> ConfirmacionPlaza : guardarPlaza()
+    note right of ConfirmacionPlaza
+        <b>Sistema registra</b> la nueva plaza
+        como activa en el sistema.
+    end note
+
+    ConfirmacionPlaza -[#green]-> [*]
+}
+
+PLAZA_ABIERTA -[#green]-> PLAZAS_ABIERTO_FINAL : confirmarRegistro()
+note left on link
+    <b>Sistema confirma</b> la plaza registrada
+    y regresa al listado de plazas.
+end note
+
+PLAZA_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cancelarRegistro()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Supervisor solicita</b> cancelar la operación.
+    <b>Sistema descarta</b> los datos introducidos
+    y regresa al listado de plazas.
+end note
+
+PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

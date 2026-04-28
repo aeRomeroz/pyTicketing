@@ -1,0 +1,76 @@
+@startuml CU06_AutorizarReembolso
+title Autorizar Reembolso
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state REEMBOLSOS_ABIERTO_INICIAL as "REEMBOLSOS_ABIERTO"
+state REEMBOLSO_ABIERTO as "REEMBOLSO_ABIERTO"
+state REEMBOLSOS_ABIERTO_FINAL as "REEMBOLSOS_ABIERTO"
+
+[*] -[#green]-> REEMBOLSOS_ABIERTO_INICIAL
+
+REEMBOLSOS_ABIERTO_INICIAL -[#green]-> REEMBOLSO_ABIERTO : revisarReembolso()
+note left on link
+    <b>Supervisor solicita</b> revisar una solicitud
+    de reembolso pendiente.
+    <b>Sistema presenta</b> el detalle del reembolso
+    (venta original, monto, motivo de anulación).
+end note
+
+state REEMBOLSO_ABIERTO {
+    state VisualizacionReembolso as "Visualización de Reembolso"
+    state MotivoRechazo as "Motivo de Rechazo"
+    state ResolucionReembolso as "Resolución de Reembolso"
+
+    [*] -[#green]-> VisualizacionReembolso
+    note right of VisualizacionReembolso
+        <b>Sistema muestra</b> los datos de la venta
+        original, el monto fijo y el motivo
+        de anulación introducido por el Taquillero.
+        <b>Supervisor puede solicitar</b> aprobar
+        o rechazar el reembolso.
+    end note
+
+    VisualizacionReembolso -[#green]-> ResolucionReembolso : aprobarReembolso()
+    note right of ResolucionReembolso
+        <b>Sistema registra</b> el reembolso como aprobado.
+        <b>Sistema notifica</b> al Taquillero
+        para ejecutar la devolución al cliente.
+    end note
+
+    VisualizacionReembolso -[#red]-> MotivoRechazo : rechazarReembolso()
+    note right of MotivoRechazo
+        <b>Supervisor introduce</b> el motivo
+        del rechazo (obligatorio).
+        <b>Sistema valida</b> que el motivo no esté vacío.
+    end note
+
+    MotivoRechazo -[#red]-> ResolucionReembolso : confirmarRechazo()
+    note right of ResolucionReembolso
+        <b>Sistema registra</b> el reembolso como rechazado.
+        <b>Sistema notifica</b> al Taquillero
+        con el motivo del rechazo.
+    end note
+
+    ResolucionReembolso -[#green]-> [*]
+}
+
+REEMBOLSO_ABIERTO -[#green]-> REEMBOLSOS_ABIERTO_FINAL : confirmarResolucion()
+note left on link
+    <b>Sistema confirma</b> la resolución del reembolso
+    y regresa al listado de reembolsos pendientes.
+end note
+
+REEMBOLSO_ABIERTO -[#red]-> REEMBOLSOS_ABIERTO_FINAL : cancelarRevision()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Supervisor solicita</b> salir sin resolver.
+    <b>Sistema mantiene</b> el reembolso en estado
+    pendiente de autorización.
+end note
+
+REEMBOLSOS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

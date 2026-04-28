@@ -1,0 +1,61 @@
+@startuml CU27_ReactivarUsuario
+title Reactivar Usuario
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state USUARIOS_ABIERTO_INICIAL as "USUARIOS_ABIERTO"
+state USUARIO_ABIERTO as "USUARIO_ABIERTO"
+state USUARIOS_ABIERTO_FINAL as "USUARIOS_ABIERTO"
+
+[*] -[#green]-> USUARIOS_ABIERTO_INICIAL
+
+USUARIOS_ABIERTO_INICIAL -[#green]-> USUARIO_ABIERTO : reactivarUsuario()
+note left on link
+    <b>Administrador solicita</b> reactivar un usuario
+    previamente desactivado.
+    <b>Sistema presenta</b> la ficha del usuario
+    con la opción de confirmar la reactivación.
+end note
+
+state USUARIO_ABIERTO {
+    state VisualizacionUsuario as "Visualización de Usuario"
+    state ConfirmacionReactivacion as "Confirmación de Reactivación"
+
+    [*] -[#green]-> VisualizacionUsuario
+    note right of VisualizacionUsuario
+        <b>Sistema muestra</b> los datos del usuario
+        y advierte que la reactivación restaurará
+        su acceso al sistema.
+        <b>Administrador puede solicitar</b> confirmar
+        mediante ejecutarReactivacion().
+    end note
+
+    VisualizacionUsuario -[#green]-> ConfirmacionReactivacion : ejecutarReactivacion()
+    note right of ConfirmacionReactivacion
+        <b>Sistema marca</b> el usuario como activo.
+        <b>Sistema restaura</b> su acceso al sistema
+        con el rol que tenía asignado.
+    end note
+
+    ConfirmacionReactivacion -[#green]-> [*]
+}
+
+USUARIO_ABIERTO -[#green]-> USUARIOS_ABIERTO_FINAL : confirmarReactivacion()
+note left on link
+    <b>Sistema confirma</b> la reactivación del usuario
+    y regresa al listado de usuarios.
+end note
+
+USUARIO_ABIERTO -[#red]-> USUARIOS_ABIERTO_FINAL : cancelarReactivacion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Administrador solicita</b> cancelar la operación.
+    <b>Sistema mantiene</b> el usuario inactivo
+    y regresa al listado de usuarios.
+end note
+
+USUARIOS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

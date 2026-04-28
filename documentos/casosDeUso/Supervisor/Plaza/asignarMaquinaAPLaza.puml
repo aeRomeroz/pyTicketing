@@ -1,0 +1,68 @@
+@startuml CU15_AsignarMaquinaAPlaza
+title Asignar Máquina a Plaza
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state MAQUINAS_ABIERTO_INICIAL as "MAQUINAS_ABIERTO"
+state ASIGNACION_ABIERTA as "ASIGNACION_ABIERTA"
+state MAQUINAS_ABIERTO_FINAL as "MAQUINAS_ABIERTO"
+
+[*] -[#green]-> MAQUINAS_ABIERTO_INICIAL
+
+MAQUINAS_ABIERTO_INICIAL -[#green]-> ASIGNACION_ABIERTA : asignarMaquinaAPlaza()
+note left on link
+    <b>Supervisor solicita</b> asignar una máquina
+    a una plaza.
+    <b>Sistema presenta</b> el formulario de asignación
+    con las máquinas y plazas activas disponibles.
+end note
+
+state ASIGNACION_ABIERTA {
+    state SeleccionMaquina as "Selección de Máquina"
+    state SeleccionPlaza as "Selección de Plaza"
+    state ConfirmacionAsignacion as "Confirmación de Asignación"
+
+    [*] -[#green]-> SeleccionMaquina
+    note right of SeleccionMaquina
+        <b>Sistema muestra</b> las máquinas activas
+        sin plaza asignada.
+        <b>Supervisor solicita</b> seleccionar
+        una máquina.
+    end note
+
+    SeleccionMaquina -[#green]-> SeleccionPlaza : seleccionarMaquina()
+    note right of SeleccionPlaza
+        <b>Sistema muestra</b> las plazas activas
+        disponibles.
+        <b>Supervisor solicita</b> seleccionar
+        una plaza.
+    end note
+
+    SeleccionPlaza -[#green]-> ConfirmacionAsignacion : seleccionarPlaza()
+    note right of ConfirmacionAsignacion
+        <b>Sistema vincula</b> la máquina
+        a la plaza seleccionada.
+    end note
+
+    ConfirmacionAsignacion -[#green]-> [*]
+}
+
+ASIGNACION_ABIERTA -[#green]-> MAQUINAS_ABIERTO_FINAL : confirmarAsignacion()
+note left on link
+    <b>Sistema confirma</b> la asignación realizada
+    y regresa al listado de máquinas.
+end note
+
+ASIGNACION_ABIERTA -[#red]-> MAQUINAS_ABIERTO_FINAL : cancelarAsignacion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Supervisor solicita</b> cancelar la operación.
+    <b>Sistema descarta</b> la asignación
+    y regresa al listado de máquinas.
+end note
+
+MAQUINAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

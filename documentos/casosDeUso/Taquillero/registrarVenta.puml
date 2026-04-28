@@ -1,0 +1,66 @@
+@startuml CU01_RegistrarVenta
+title Registrar Venta
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state VENTAS_ABIERTO_INICIAL as "VENTAS_ABIERTO"
+state VENTA_ABIERTA as "VENTA_ABIERTA"
+state VENTAS_ABIERTO_FINAL as "VENTAS_ABIERTO"
+
+[*] -[#green]-> VENTAS_ABIERTO_INICIAL
+
+VENTAS_ABIERTO_INICIAL -[#green]-> VENTA_ABIERTA : registrarVenta()
+note left on link
+    <b>Taquillero solicita</b> registrar una nueva venta.
+    <b>Sistema presenta</b> el formulario de venta
+    (máquinas activas de la plaza).
+end note
+
+state VENTA_ABIERTA {
+    state SeleccionMaquina as "Selección de Máquina"
+    state SeleccionTickets as "Selección de Tickets"
+    state ConfirmacionPago as "Confirmación de Pago"
+
+    [*] -[#green]-> SeleccionMaquina
+    note right of SeleccionMaquina
+        <b>Sistema muestra</b> las máquinas activas de la plaza.
+        <b>Taquillero solicita</b> seleccionar una máquina.
+    end note
+
+    SeleccionMaquina -[#green]-> SeleccionTickets
+    note right of SeleccionTickets
+        <b>Sistema presenta</b> los tipos de ticket
+        disponibles (niño/adulto) con su precio.
+        <b>Taquillero introduce</b> la cantidad por tipo.
+        <b>Sistema calcula</b> y muestra el total.
+    end note
+
+    SeleccionTickets -[#green]-> ConfirmacionPago
+    note right of ConfirmacionPago
+        <b>Taquillero solicita</b> seleccionar método de pago.
+        <b>Sistema registra</b> la venta y marca
+        los tickets como vendidos.
+    end note
+
+    ConfirmacionPago -[#green]-> [*]
+}
+
+VENTA_ABIERTA -[#green]-> VENTAS_ABIERTO_FINAL : confirmarVenta()
+note left on link
+    <b>Sistema confirma</b> la venta registrada
+    y regresa al listado de ventas.
+end note
+
+VENTA_ABIERTA -[#red]-> VENTAS_ABIERTO_FINAL : cancelarVenta()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Taquillero solicita</b> cancelar la operación.
+    <b>Sistema descarta</b> los datos introducidos
+    y regresa al listado de ventas.
+end note
+
+VENTAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

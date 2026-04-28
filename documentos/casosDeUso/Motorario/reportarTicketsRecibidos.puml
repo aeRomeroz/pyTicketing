@@ -1,0 +1,74 @@
+@startuml CU05_ReportarTicketsRecibidos
+title Reportar Tickets Recibidos
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state REPORTE_ABIERTO_INICIAL as "REPORTE_ABIERTO"
+state REPORTE_ABIERTO as "REPORTE_ABIERTO"
+state REPORTE_ABIERTO_FINAL as "REPORTE_ABIERTO"
+
+[*] -[#green]-> REPORTE_ABIERTO_INICIAL
+
+REPORTE_ABIERTO_INICIAL -[#green]-> REPORTE_ABIERTO : abrirReporte()
+note left on link
+    <b>Motorario solicita</b> registrar entradas
+    a su máquina.
+    <b>Sistema presenta</b> el formulario de reporte
+    con el conteo acumulado del día.
+end note
+
+state REPORTE_ABIERTO {
+    state VisualizacionReporte as "Visualización de Reporte"
+    state RegistroEntradas as "Registro de Entradas"
+    state ValidacionConteo as "Validación de Conteo"
+
+    [*] -[#green]-> VisualizacionReporte
+    note right of VisualizacionReporte
+        <b>Sistema muestra</b> el conteo acumulado
+        del día (niño/adulto) y el total.
+        <b>Motorario puede solicitar</b> registrar
+        entradas individuales o en lote.
+    end note
+
+    VisualizacionReporte -[#green]-> RegistroEntradas : registrarEntradas()
+    note right of RegistroEntradas
+        <b>Motorario introduce</b> la cantidad
+        de entradas por tipo (niño/adulto),
+        de forma individual o en lote.
+        <b>Sistema acumula</b> el conteo del día.
+    end note
+
+    RegistroEntradas -[#green]-> ValidacionConteo : guardarEntradas()
+    note right of ValidacionConteo
+        <b>Sistema compara</b> el conteo acumulado
+        del motorario con las ventas del taquillero.
+        Si cuadran: <b>Sistema confirma</b> el reporte.
+        Si no cuadran: <b>Sistema notifica</b> al
+        Taquillero, Motorario y Supervisor
+        para revisión.
+    end note
+
+    ValidacionConteo -[#green]-> VisualizacionReporte
+    ValidacionConteo -[#green]-> [*]
+}
+
+REPORTE_ABIERTO -[#green]-> REPORTE_ABIERTO_FINAL : cerrarReporte()
+note left on link
+    <b>Motorario solicita</b> cerrar el reporte del día.
+    <b>Sistema registra</b> el reporte como finalizado
+    y lo consolida en el cierre de caja.
+end note
+
+REPORTE_ABIERTO -[#red]-> REPORTE_ABIERTO_FINAL : cancelarReporte()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Motorario solicita</b> salir sin cerrar.
+    <b>Sistema mantiene</b> el reporte en estado
+    abierto con el conteo acumulado.
+end note
+
+REPORTE_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

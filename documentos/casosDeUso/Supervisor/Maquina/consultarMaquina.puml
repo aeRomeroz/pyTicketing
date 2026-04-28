@@ -1,0 +1,46 @@
+@startuml CU20_ConsultarMaquina
+title Consultar Máquina
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state MAQUINAS_ABIERTO_INICIAL as "MAQUINAS_ABIERTO"
+state MAQUINA_ABIERTA as "MAQUINA_ABIERTA"
+state MAQUINAS_ABIERTO_FINAL as "MAQUINAS_ABIERTO"
+
+[*] -[#green]-> MAQUINAS_ABIERTO_INICIAL
+
+MAQUINAS_ABIERTO_INICIAL -[#green]-> MAQUINA_ABIERTA : consultarMaquina()
+note left on link
+    <b>Supervisor solicita</b> consultar el detalle
+    de una máquina existente.
+    <b>Sistema presenta</b> la ficha completa
+    de la máquina.
+end note
+
+state MAQUINA_ABIERTA {
+    state VisualizacionMaquina as "Visualización de Máquina"
+
+    [*] -[#green]-> VisualizacionMaquina
+    note right of VisualizacionMaquina
+        <b>Sistema muestra</b> los datos de la máquina:
+        nombre, tipoRestriccion, tipos de ticket,
+        plaza y motorario asignados.
+        <b>Sistema permite solicitar</b> editar
+        mediante editarMaquina().
+    end note
+
+    VisualizacionMaquina -[#green]-> [*]
+}
+
+MAQUINA_ABIERTA -[#red]-> MAQUINAS_ABIERTO_FINAL : cerrarMaquina()
+note right on link
+    <b>CERRAR:</b>
+    <b>Supervisor solicita</b> salir de la ficha.
+    <b>Sistema presenta</b> el listado de máquinas.
+end note
+
+MAQUINAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

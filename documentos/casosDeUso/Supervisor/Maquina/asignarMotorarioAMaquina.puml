@@ -1,0 +1,68 @@
+@startuml CU17_AsignarMotorarioAMaquina
+title Asignar Motorario a Máquina
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state MAQUINAS_ABIERTO_INICIAL as "MAQUINAS_ABIERTO"
+state ASIGNACION_ABIERTA as "ASIGNACION_ABIERTA"
+state MAQUINAS_ABIERTO_FINAL as "MAQUINAS_ABIERTO"
+
+[*] -[#green]-> MAQUINAS_ABIERTO_INICIAL
+
+MAQUINAS_ABIERTO_INICIAL -[#green]-> ASIGNACION_ABIERTA : asignarMotorarioAMaquina()
+note left on link
+    <b>Supervisor solicita</b> asignar un motorario
+    a una máquina.
+    <b>Sistema presenta</b> el formulario de asignación
+    con los motorarios y máquinas activas disponibles.
+end note
+
+state ASIGNACION_ABIERTA {
+    state SeleccionMotorario as "Selección de Motorario"
+    state SeleccionMaquina as "Selección de Máquina"
+    state ConfirmacionAsignacion as "Confirmación de Asignación"
+
+    [*] -[#green]-> SeleccionMotorario
+    note right of SeleccionMotorario
+        <b>Sistema muestra</b> los motorarios activos
+        sin máquina asignada.
+        <b>Supervisor solicita</b> seleccionar
+        un motorario.
+    end note
+
+    SeleccionMotorario -[#green]-> SeleccionMaquina : seleccionarMotorario()
+    note right of SeleccionMaquina
+        <b>Sistema muestra</b> las máquinas activas
+        sin motorario asignado.
+        <b>Supervisor solicita</b> seleccionar
+        una máquina.
+    end note
+
+    SeleccionMaquina -[#green]-> ConfirmacionAsignacion : seleccionarMaquina()
+    note right of ConfirmacionAsignacion
+        <b>Sistema vincula</b> el motorario
+        a la máquina seleccionada.
+    end note
+
+    ConfirmacionAsignacion -[#green]-> [*]
+}
+
+ASIGNACION_ABIERTA -[#green]-> MAQUINAS_ABIERTO_FINAL : confirmarAsignacion()
+note left on link
+    <b>Sistema confirma</b> la asignación realizada
+    y regresa al listado de máquinas.
+end note
+
+ASIGNACION_ABIERTA -[#red]-> MAQUINAS_ABIERTO_FINAL : cancelarAsignacion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Supervisor solicita</b> cancelar la operación.
+    <b>Sistema descarta</b> la asignación
+    y regresa al listado de máquinas.
+end note
+
+MAQUINAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

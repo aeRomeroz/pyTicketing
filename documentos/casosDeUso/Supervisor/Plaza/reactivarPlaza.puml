@@ -1,0 +1,62 @@
+@startuml CU25_ReactivarPlaza
+title Reactivar Plaza
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
+state PLAZA_ABIERTA as "PLAZA_ABIERTA"
+state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+
+[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+
+PLAZAS_ABIERTO_INICIAL -[#green]-> PLAZA_ABIERTA : reactivarPlaza()
+note left on link
+    <b>Supervisor solicita</b> reactivar una plaza
+    dada de baja.
+    <b>Sistema presenta</b> la ficha de la plaza
+    con la opción de confirmar la reactivación.
+end note
+
+state PLAZA_ABIERTA {
+    state VisualizacionPlaza as "Visualización de Plaza"
+    state ConfirmacionReactivacion as "Confirmación de Reactivación"
+
+    [*] -[#green]-> VisualizacionPlaza
+    note right of VisualizacionPlaza
+        <b>Sistema muestra</b> los datos de la plaza
+        y advierte que la reactivación restaurará
+        los vínculos suspendidos con sus
+        máquinas y taquilleros asignados.
+        <b>Supervisor puede solicitar</b> confirmar
+        mediante ejecutarReactivacion().
+    end note
+
+    VisualizacionPlaza -[#green]-> ConfirmacionReactivacion : ejecutarReactivacion()
+    note right of ConfirmacionReactivacion
+        <b>Sistema marca</b> la plaza como activa.
+        <b>Sistema restaura</b> los vínculos suspendidos
+        con sus máquinas y taquilleros asignados.
+    end note
+
+    ConfirmacionReactivacion -[#green]-> [*]
+}
+
+PLAZA_ABIERTA -[#green]-> PLAZAS_ABIERTO_FINAL : confirmarReactivacion()
+note left on link
+    <b>Sistema confirma</b> la reactivación de la plaza
+    y regresa al listado de plazas.
+end note
+
+PLAZA_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cancelarReactivacion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Supervisor solicita</b> cancelar la operación.
+    <b>Sistema mantiene</b> la plaza inactiva
+    y regresa al listado de plazas.
+end note
+
+PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

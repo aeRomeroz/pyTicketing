@@ -1,0 +1,45 @@
+@startuml CU08_ConsultarUsuario
+title Consultar Usuario
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state USUARIOS_ABIERTO_INICIAL as "USUARIOS_ABIERTO"
+state USUARIO_ABIERTO as "USUARIO_ABIERTO"
+state USUARIOS_ABIERTO_FINAL as "USUARIOS_ABIERTO"
+
+[*] -[#green]-> USUARIOS_ABIERTO_INICIAL
+
+USUARIOS_ABIERTO_INICIAL -[#green]-> USUARIO_ABIERTO : consultarUsuario()
+note left on link
+    <b>Administrador solicita</b> consultar el detalle
+    de un usuario existente.
+    <b>Sistema presenta</b> la ficha completa
+    del usuario.
+end note
+
+state USUARIO_ABIERTO {
+    state VisualizacionUsuario as "Visualización de Usuario"
+
+    [*] -[#green]-> VisualizacionUsuario
+    note right of VisualizacionUsuario
+        <b>Sistema muestra</b> los datos del usuario:
+        nombre, rol y estado (activo/inactivo).
+        <b>Sistema permite solicitar</b> editar mediante
+        editarUsuario().
+    end note
+
+    VisualizacionUsuario -[#green]-> [*]
+}
+
+USUARIO_ABIERTO -[#red]-> USUARIOS_ABIERTO_FINAL : cerrarUsuario()
+note right on link
+    <b>CERRAR:</b>
+    <b>Administrador solicita</b> salir de la ficha.
+    <b>Sistema presenta</b> el listado de usuarios.
+end note
+
+USUARIOS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

@@ -1,0 +1,57 @@
+@startuml CU19_EditarPlaza
+title Editar Plaza
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
+state PLAZA_ABIERTA as "PLAZA_ABIERTA"
+state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+
+[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+
+PLAZAS_ABIERTO_INICIAL -[#green]-> PLAZA_ABIERTA : editarPlaza()
+note left on link
+    <b>Supervisor solicita</b> editar los datos
+    de una plaza existente.
+    <b>Sistema presenta</b> el formulario de edición
+    con los datos actuales precargados.
+end note
+
+state PLAZA_ABIERTA {
+    state EdicionPlaza as "Edición de Plaza"
+    state ConfirmacionPlaza as "Confirmación de Plaza"
+
+    [*] -[#green]-> EdicionPlaza
+    note right of EdicionPlaza
+        <b>Supervisor modifica</b> los datos
+        de la plaza (nombre, ciudad, estado).
+        <b>Sistema valida</b> los datos introducidos.
+    end note
+
+    EdicionPlaza -[#green]-> ConfirmacionPlaza : guardarPlaza()
+    note right of ConfirmacionPlaza
+        <b>Sistema registra</b> los cambios de la plaza.
+    end note
+
+    ConfirmacionPlaza -[#green]-> [*]
+}
+
+PLAZA_ABIERTA -[#green]-> PLAZAS_ABIERTO_FINAL : confirmarEdicion()
+note left on link
+    <b>Sistema confirma</b> los cambios guardados
+    y regresa al listado de plazas.
+end note
+
+PLAZA_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cancelarEdicion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Supervisor solicita</b> salir sin guardar.
+    <b>Sistema descarta</b> los cambios introducidos
+    y regresa al listado de plazas.
+end note
+
+PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

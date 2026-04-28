@@ -1,0 +1,58 @@
+@startuml CU09_EditarUsuario
+title Editar Usuario
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state USUARIOS_ABIERTO_INICIAL as "USUARIOS_ABIERTO"
+state USUARIO_ABIERTO as "USUARIO_ABIERTO"
+state USUARIOS_ABIERTO_FINAL as "USUARIOS_ABIERTO"
+
+[*] -[#green]-> USUARIOS_ABIERTO_INICIAL
+
+USUARIOS_ABIERTO_INICIAL -[#green]-> USUARIO_ABIERTO : editarUsuario()
+note left on link
+    <b>Administrador/Usuario solicita</b> editar
+    los datos de un usuario existente.
+    <b>Sistema presenta</b> el formulario de edición
+    con los datos actuales precargados.
+end note
+
+state USUARIO_ABIERTO {
+    state EdicionUsuario as "Edición de Usuario"
+    state ConfirmacionUsuario as "Confirmación de Usuario"
+
+    [*] -[#green]-> EdicionUsuario
+    note right of EdicionUsuario
+        <b>Administrador/Usuario modifica</b> los datos
+        del usuario (nombre, contraseña).
+        <b>Solo el Administrador puede</b> modificar el rol.
+        <b>Sistema valida</b> los datos introducidos.
+    end note
+
+    EdicionUsuario -[#green]-> ConfirmacionUsuario : guardarUsuario()
+    note right of ConfirmacionUsuario
+        <b>Sistema registra</b> los cambios del usuario.
+    end note
+
+    ConfirmacionUsuario -[#green]-> [*]
+}
+
+USUARIO_ABIERTO -[#green]-> USUARIOS_ABIERTO_FINAL : confirmarEdicion()
+note left on link
+    <b>Sistema confirma</b> los cambios guardados
+    y regresa al listado de usuarios.
+end note
+
+USUARIO_ABIERTO -[#red]-> USUARIOS_ABIERTO_FINAL : cancelarEdicion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Administrador/Usuario solicita</b> salir sin guardar.
+    <b>Sistema descarta</b> los cambios introducidos
+    y regresa al listado de usuarios.
+end note
+
+USUARIOS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml

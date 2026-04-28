@@ -1,0 +1,63 @@
+@startuml CU23_DesasignarTaquilleroDePlaza
+title Desasignar Taquillero de Plaza
+skinparam nodesep 100
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam Padding 10
+
+state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
+state ASIGNACION_ABIERTA as "ASIGNACION_ABIERTA"
+state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+
+[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+
+PLAZAS_ABIERTO_INICIAL -[#green]-> ASIGNACION_ABIERTA : desasignarTaquilleroDePlaza()
+note left on link
+    <b>Supervisor solicita</b> desasignar un taquillero
+    de su plaza actual.
+    <b>Sistema presenta</b> la ficha del taquillero
+    con su plaza asignada actual.
+end note
+
+state ASIGNACION_ABIERTA {
+    state VisualizacionAsignacion as "Visualización de Asignación"
+    state ConfirmacionDesasignacion as "Confirmación de Desasignación"
+
+    [*] -[#green]-> VisualizacionAsignacion
+    note right of VisualizacionAsignacion
+        <b>Sistema muestra</b> el taquillero y su
+        plaza asignada actual.
+        <b>Sistema advierte</b> que el taquillero
+        quedará sin plaza asignada.
+        <b>Supervisor puede solicitar</b> confirmar
+        mediante ejecutarDesasignacion().
+    end note
+
+    VisualizacionAsignacion -[#green]-> ConfirmacionDesasignacion : ejecutarDesasignacion()
+    note right of ConfirmacionDesasignacion
+        <b>Sistema desvincula</b> el taquillero
+        de su plaza actual.
+        <b>Sistema marca</b> el taquillero como
+        disponible para nueva asignación.
+    end note
+
+    ConfirmacionDesasignacion -[#green]-> [*]
+}
+
+ASIGNACION_ABIERTA -[#green]-> PLAZAS_ABIERTO_FINAL : confirmarDesasignacion()
+note left on link
+    <b>Sistema confirma</b> la desasignación realizada
+    y regresa al listado de plazas.
+end note
+
+ASIGNACION_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cancelarDesasignacion()
+note right on link
+    <b>CANCELAR:</b>
+    <b>Supervisor solicita</b> cancelar la operación.
+    <b>Sistema mantiene</b> el vínculo actual
+    y regresa al listado de plazas.
+end note
+
+PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
+
+@enduml
