@@ -37,71 +37,49 @@ documentos/
 
 ### 🔑 Administrador
 
-| Caso de uso | Diagrama |
+| Caso de uso | Documentación |
 |---|---|
-| Crear usuario | [ver](documentos/casosDeUso/Administrador/crearUsuario.svg) |
-| Consultar usuario | [ver](documentos/casosDeUso/Administrador/consultarUsuario.svg) |
-| Editar usuario | [ver](documentos/casosDeUso/Administrador/editarUsuario.svg) |
-| Desactivar usuario | [ver](documentos/casosDeUso/Administrador/desactivarUsuario.svg) |
-| Reactivar usuario | [ver](documentos/casosDeUso/Administrador/reactivarUsuario.svg) |
+| Gestión de Usuarios | [ver](documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Administrador/README.md) |
 
 ---
 
 ### 📍 Supervisor — Plazas
 
-| Caso de uso | Diagrama |
+| Caso de uso | Documentación |
 |---|---|
-| Registrar plaza | [ver](documentos/casosDeUso/Supervisor/Plaza/registrarPlaza.svg) |
-| Consultar plaza | [ver](documentos/casosDeUso/Supervisor/Plaza/consultarPlaza.svg) |
-| Editar plaza | [ver](documentos/casosDeUso/Supervisor/Plaza/editarPlaza.svg) |
-| Dar de baja plaza | [ver](documentos/casosDeUso/Supervisor/Plaza/darDeBajaPlaza.svg) |
-| Reactivar plaza | [ver](documentos/casosDeUso/Supervisor/Plaza/reactivarPlaza.svg) |
-| Asignar máquina a plaza | [ver](documentos/casosDeUso/Supervisor/Plaza/asignarMaquinaAPLaza.svg) |
-| Desasignar máquina de plaza | [ver](documentos/casosDeUso/Supervisor/Plaza/desasignarMaquinaDePlaza.svg) |
-| Asignar taquillero a plaza | [ver](documentos/casosDeUso/Supervisor/Plaza/asignarTaquilleroAPlaza.svg) |
-| Desasignar taquillero de plaza | [ver](documentos/casosDeUso/Supervisor/Plaza/desasignarTaquilleroDePlaza.svg) |
+| Gestión de Plazas | [ver](documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md) |
 
 ---
 
 ### 🎡 Supervisor — Máquinas
 
-| Caso de uso | Diagrama |
+| Caso de uso | Documentación |
 |---|---|
-| Registrar máquina | [ver](documentos/casosDeUso/Supervisor/Maquina/registrarMaquina.svg) |
-| Consultar máquina | [ver](documentos/casosDeUso/Supervisor/Maquina/consultarMaquina.svg) |
-| Editar máquina | [ver](documentos/casosDeUso/Supervisor/Maquina/editarMaquina.svg) |
-| Dar de baja máquina | [ver](documentos/casosDeUso/Supervisor/Maquina/darDeBajaMaquina.svg) |
-| Reactivar máquina | [ver](documentos/casosDeUso/Supervisor/Maquina/reactivarMaquina.svg) |
-| Asignar motorario a máquina | [ver](documentos/casosDeUso/Supervisor/Maquina/asignarMotorarioAMaquina.svg) |
-| Desasignar motorario de máquina | [ver](documentos/casosDeUso/Supervisor/Maquina/desasignarMotorarioDeMaquina.svg) |
+| Gestión de Máquinas | [ver](documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Maquina/README.md) |
 
 ---
 
 ### 💰 Supervisor — Ventas
 
-| Caso de uso | Diagrama |
+| Caso de uso | Documentación |
 |---|---|
-| Anular venta | [ver](documentos/casosDeUso/Supervisor/Venta/anularVenta.svg) |
-| Autorizar reembolso | [ver](documentos/casosDeUso/Supervisor/Venta/autorizarReembolso.svg) |
-| Revisar cierre de caja | [ver](documentos/casosDeUso/Supervisor/Venta/revisarCierreDeCaja.svg) |
+| Gestión de Ventas | [ver](documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Venta/README.md) |
 
 ---
 
 ### 🎟️ Taquillero
 
-| Caso de uso | Diagrama |
+| Caso de uso | Documentación |
 |---|---|
-| Registrar venta | [ver](documentos/casosDeUso/Taquillero/registrarVenta.svg) |
-| Anular venta | [ver](documentos/casosDeUso/Taquillero/anularVenta.svg) |
-| Consolidar cierre de caja | [ver](documentos/casosDeUso/Taquillero/consolidarCierreDeCaja.svg) |
+| Operaciones de Taquilla | [ver](documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Taquillero/README.md) |
 
 ---
 
 ### 🎠 Motorario
 
-| Caso de uso | Diagrama |
+| Caso de uso | Documentación |
 |---|---|
-| Reportar tickets recibidos | [ver](documentos/casosDeUso/Motorario/reportarTicketsRecibidos.svg) |
+| Reportes de Motorario | [ver](documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Motorario/README.md) |
 
 ---
 

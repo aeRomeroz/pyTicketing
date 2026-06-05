@@ -1,0 +1,80 @@
+<div align="right">
+
+[![](https://img.shields.io/badge/-Inicio-0A3B64?style=for-the-badge&logo=github&logoColor=white)](/README.md)
+[![](https://img.shields.io/badge/-Modelo_del_Dominio-0A3B64?style=for-the-badge&logo=drawio&logoColor=white)](/documents/00-requisitos/00-modeloDelDominio/README.md)
+[![](https://img.shields.io/badge/-Actores_Y_Casos_de_Uso-0A3B64?style=for-the-badge&logo=use-case&logoColor=white)](/documents/00-requisitos/01-actores_casosDeUso/00-actores/README.md)
+[![](https://img.shields.io/badge/-Diagramas_de_Contexto-0A3B64?style=for-the-badge&logo=flowchart&logoColor=white)](/documents/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/README.md)
+[![](https://img.shields.io/badge/-Detalle_de_Casos_de_Uso-0A3B64?style=for-the-badge&logo=notepad&logoColor=white)](/documents/00-requisitos/01-actores_casosDeUso/04-detalladoCasosDeUso/README.md)
+[![](https://img.shields.io/badge/-Prototipos-0A3B64?style=for-the-badge&logo=figma&logoColor=white)](/documents/00-requisitos/01-actores_casosDeUso/05-prototipadoCasosDeUso/README.md)
+[![](https://img.shields.io/badge/-Priorización-0A3B64?style=for-the-badge&logo=priority&logoColor=white)](/documents/00-requisitos/01-actores_casosDeUso/03-priorizaciónCasosDeUso/README.md)
+
+</div>
+
+# Casos de Uso
+
+## Actores y casos de uso identificados
+
+Los actores identificados para el sistema **pyTicketing** son:
+
+- **Administrador**: responsable de la gestión de usuarios del sistema (crear, consultar, editar, desactivar, reactivar).
+- **Supervisor**: encargado de la gestión operativa de plazas, máquinas, asignaciones, cierre de caja y reembolsos.
+- **Taquillero**: responsable del registro de ventas, anulaciones y consolidación del cierre de caja.
+- **Motorario**: encargado del reporte de tickets recibidos en su máquina para el control de aforo y uso.
+
+<div align=center>
+
+| **Administrador** | **Supervisor** | **Taquillero** | **Motorario** |
+| :---: | :---: | :---: | :---: |
+| ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Administrador/CdUAdministrador.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/CdUSupervisor-GestionDePlaza.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Taquillero/CdUTaquillero.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Motorario/CdUMotorario.svg) |
+| [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Administrador/CdUAdministrador.puml) | [Código fuente](/actores/supervisor/CdUSupervisor-GestionDePlaza.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Taquillero/CdUTaquillero.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Motorario/CdUMotorario.puml) |
+
+> Debido a la amplitud de responsabilidades operativas, el actor **Supervisor** se ha estructurado en **tres diagramas independientes** según su área funcional.
+
+| Área funcional | Diagrama | Código (.puml) |
+| :--- | :---: | :--- |
+| **Gestión de Plazas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/CdUSupervisor-GestionDePlaza.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDePlaza.puml) |
+| **Gestión de Máquinas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Maquina/CdUSupervisor-GestionDeMaquinas.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDeMaquinas.puml) |
+| **Gestión de Ventas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Venta/CdUSupervisor-GestionDeVenta.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDeVenta.puml) |
+
+</div>
+
+---
+
+## Diagramas de contexto
+
+Los diagramas de contexto representan el entorno operativo y la navegación entre estados para cada rol, permitiendo visualizar los flujos permitidos y las transiciones de estado en el sistema.
+
+<div align=center>
+
+| **Administrador** | **Supervisor** | **Taquillero** | **Motorario** |
+| :---: | :---: | :---: | :---: |
+| ![](/images/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Administrador.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Supervisor.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Taquillero.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Motorario.svg) |
+| [Ver código](/UML/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Administrador.puml) | [Ver código](/UML/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Supervisor.puml) | [Ver código](/UML/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Taquillero.puml) | [Ver código](/UML/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Motorario.puml) |
+
+</div>
+
+---
+
+## Detalle de Casos de Uso
+
+A continuación se presentan los diagramas detallados (máquinas de estados) para los casos de uso identificados, organizados por actor y área funcional.
+
+### Supervisor — Gestión de Plazas
+
+| CRUD de Plazas | Asignaciones |
+| :--- | :--- |
+| [registrarPlaza()](/documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md#registrar-plaza) | [asignarMaquinaAPlaza()](/documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md#asignar-máquina-a-plaza) |
+| [consultarPlaza()](/documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md#consultar-plaza) | [desasignarMaquinaDePlaza()](/documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md#desasignar-máquina-de-plaza) |
+| [editarPlaza()](/documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md#editar-plaza) | [asignarTaquilleroAPlaza()](/documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md#asignar-taquillero-a-plaza) |
+| [darDeBajaPlaza()](/documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md#dar-de-baja-plaza) | [desasignarTaquilleroDePlaza()](/documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md#desasignar-taquillero-de-plaza) |
+| [reactivarPlaza()](/documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md#reactivar-plaza) | |
+
+---
+
+## Totales por actor:
+
+- **Administrador:** 5 casos de uso
+- **Supervisor:** 18 casos de uso (Plazas: 9, Máquinas: 6, Ventas: 3)
+- **Taquillero:** 3 casos de uso
+- **Motorario:** 1 caso de uso
+- **TOTAL:** 27 casos de uso identificados
