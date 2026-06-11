@@ -1,0 +1,31 @@
+@startuml diagrama-casos-uso-supervisor-gestion-de-maquinas
+
+left to right direction
+
+package "Gestión De Maquinas" {
+
+    actor "Supervisor" as supervisor
+
+    usecase consultarMaquina as "consultarMaquina()"
+    usecase registrarMaquina as "registrarMaquina()"
+    usecase editarMaquina as "editarMaquina()"
+    usecase darDeBajaMaquina as "darDeBajaMaquina()"
+    usecase darDeAltaMaquina as "darDeAltaMaquina()"
+    
+    usecase asignarMotorarioAMaquina as "asignarMotorarioAMaquina()"
+    usecase desasignarMotorarioAMaquina as "desasignarMotorarioAMaquina()"
+ 
+}
+
+
+consultarMaquina <-- supervisor
+registrarMaquina <-- supervisor
+editarMaquina <-- supervisor
+darDeBajaMaquina <-- supervisor
+darDeAltaMaquina <-- supervisor
+
+supervisor --> asignarMotorarioAMaquina
+supervisor --> desasignarMotorarioAMaquina
+
+
+@enduml

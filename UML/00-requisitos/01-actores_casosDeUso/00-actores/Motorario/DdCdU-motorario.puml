@@ -1,0 +1,16 @@
+@startuml diagrama-casos-uso-motorario
+
+left to right direction
+
+package "Gestión de Acceso a Máquina" {
+
+    actor "Motorario" as motorario
+
+    usecase reportarTicketsRecibidos as "reportarTicketsRecibidos()"
+
+}
+
+motorario --> reportarTicketsRecibidos
+
+
+@enduml

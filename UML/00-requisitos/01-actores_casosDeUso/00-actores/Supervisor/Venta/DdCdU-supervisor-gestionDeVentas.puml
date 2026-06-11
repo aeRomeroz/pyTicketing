@@ -1,0 +1,19 @@
+@startuml diagrama-casos-uso-supervisor-gestion-de-ventas
+
+left to right direction
+
+package "Gestión De Ventas" {
+
+    actor "Supervisor" as supervisor
+    
+    usecase revisarCierreDeCaja as "revisarCierreDeCaja()"
+    usecase autorizarReembolso as "autorizarReembolso()"
+    usecase anularVenta as "anularVenta()"
+ 
+}
+
+supervisor --> revisarCierreDeCaja
+supervisor --> autorizarReembolso
+supervisor --> anularVenta
+
+@enduml

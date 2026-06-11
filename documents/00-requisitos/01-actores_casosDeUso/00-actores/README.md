@@ -25,16 +25,16 @@ Los actores identificados para el sistema **pyTicketing** son:
 
 | **Administrador** | **Supervisor** | **Taquillero** | **Motorario** |
 | :---: | :---: | :---: | :---: |
-| ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Administrador/CdUAdministrador.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/CdUSupervisor-GestionDePlaza.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Taquillero/CdUTaquillero.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Motorario/CdUMotorario.svg) |
-| [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Administrador/CdUAdministrador.puml) | [Código fuente](/actores/supervisor/CdUSupervisor-GestionDePlaza.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Taquillero/CdUTaquillero.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Motorario/CdUMotorario.puml) |
+| ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Administrador/CdUAdministrador.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/CdUSupervisor-GestionDePlaza.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Taquillero/DdCdU-taquillero.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Motorario/DdCdU-motorario.svg) |
+| [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Administrador/DdCdU-administrador.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/DdCdU-supervisor.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Taquillero/DdCdU-taquillero.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Motorario/DdCdU-motorario.puml) |
 
 > Debido a la amplitud de responsabilidades operativas, el actor **Supervisor** se ha estructurado en **tres diagramas independientes** según su área funcional.
 
 | Área funcional | Diagrama | Código (.puml) |
 | :--- | :---: | :--- |
-| **Gestión de Plazas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/CdUSupervisor-GestionDePlaza.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDePlaza.puml) |
-| **Gestión de Máquinas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Maquina/CdUSupervisor-GestionDeMaquinas.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDeMaquinas.puml) |
-| **Gestión de Ventas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Venta/CdUSupervisor-GestionDeVenta.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDeVenta.puml) |
+| **Gestión de Plazas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Plaza/DdCdU-supervisor-gestionDePlazas.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDePlaza.puml) |
+| **Gestión de Máquinas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Maquina/DdCdU-supervisor-gestionDeMaquinas.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDeMaquinas.puml) |
+| **Gestión de Ventas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Venta/DdCdU-supervisor-gestionDeVentas.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDeVenta.puml) |
 
 </div>
 

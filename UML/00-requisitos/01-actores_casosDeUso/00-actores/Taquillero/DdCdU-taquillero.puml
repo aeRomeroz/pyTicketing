@@ -1,0 +1,20 @@
+@startuml diagrama-casos-uso-taquillero
+
+left to right direction
+
+package "Gestión De Taquilla y Venta" {
+
+    actor "Taquillero" as taquillero
+
+    usecase anularVenta as "anularVenta()"
+    usecase consolidarCierreDeCaja as "consolidarCierreDeCaja()"
+    usecase registrarVenta as "registrarVenta()"
+ 
+}
+
+taquillero --> anularVenta
+taquillero --> consolidarCierreDeCaja
+taquillero --> registrarVenta
+
+
+@enduml

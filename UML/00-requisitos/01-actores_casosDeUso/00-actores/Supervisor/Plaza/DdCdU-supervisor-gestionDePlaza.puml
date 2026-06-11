@@ -1,0 +1,37 @@
+@startuml diagrama-casos-uso-supervisor-gestion-de-plazas
+
+left to right direction
+
+package "Gestión De Plazas" {
+
+    actor "Supervisor" as supervisor
+
+    usecase consultarPlaza as "consultarPlaza()"
+    usecase registrarPlaza as "registrarPlaza()"
+    usecase editarPlaza as "editarPlaza()"
+    usecase darDeBajaPlaza as "darDeBajaPlaza()"
+    usecase darDeAltaPlaza as "darDeAltaPlaza()"
+    
+    usecase asignarMaquinaAPlaza as "asignarMaquinaAPlaza()"
+    usecase desasignarMaquinaDePlaza as "desasignarMaquinaDePlaza()"
+
+    usecase asignarTaquilleroAPlaza as "asignarTaquilleroAPlaza()"
+    usecase desasignarTaquilleroDePlaza as "desasignarTaquilleroDePlaza()"
+ 
+}
+
+
+consultarPlaza <-- supervisor
+registrarPlaza <-- supervisor
+editarPlaza <-- supervisor
+darDeBajaPlaza <-- supervisor
+darDeAltaPlaza <-- supervisor
+
+supervisor --> asignarMaquinaAPlaza
+supervisor --> desasignarMaquinaDePlaza
+
+supervisor --> asignarTaquilleroAPlaza
+supervisor --> desasignarTaquilleroDePlaza
+
+
+@enduml
