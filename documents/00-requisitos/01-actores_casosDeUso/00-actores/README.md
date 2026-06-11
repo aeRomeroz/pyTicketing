@@ -32,9 +32,9 @@ Los actores identificados para el sistema **pyTicketing** son:
 
 | Área funcional | Diagrama | Código (.puml) |
 | :--- | :---: | :--- |
-| **Gestión de Plazas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Plaza/DdCdU-supervisor-gestionDePlazas.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDePlaza.puml) |
-| **Gestión de Máquinas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Maquina/DdCdU-supervisor-gestionDeMaquinas.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDeMaquinas.puml) |
-| **Gestión de Ventas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Venta/DdCdU-supervisor-gestionDeVentas.svg)</div> | [Ver código](/actores/supervisor/CdUSupervisor-GestionDeVenta.puml) |
+| **Gestión de Plazas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Plaza/DdCdU-supervisor-gestionDePlazas.svg)</div> | [Ver código](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Plaza/DdCdU-supervisor-gestionDePlaza.puml) |
+| **Gestión de Máquinas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Maquina/DdCdU-supervisor-gestionDeMaquinas.svg)</div> | [Ver código](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Maquina/DdCdU-supervisor-gestionDeMaquinas.puml) |
+| **Gestión de Ventas** | <div align="center">![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Venta/DdCdU-supervisor-gestionDeVentas.svg)</div> | [Ver código](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/Venta/DdCdU-supervisor-gestionDeVentas.puml) |
 
 </div>
 
