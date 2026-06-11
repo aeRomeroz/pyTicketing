@@ -25,7 +25,7 @@ Los actores identificados para el sistema **pyTicketing** son:
 
 | **Administrador** | **Supervisor** | **Taquillero** | **Motorario** |
 | :---: | :---: | :---: | :---: |
-| ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Administrador/CdUAdministrador.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/CdUSupervisor-GestionDePlaza.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Taquillero/DdCdU-taquillero.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Motorario/DdCdU-motorario.svg) |
+| ![](/images/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Administrador/CdUAdministrador.svg) | ![Diagrama General de Casos de Uso del Supervisor](/images/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/DdCdU-supervisor-general.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Taquillero/DdCdU-taquillero.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/00-actores/Motorario/DdCdU-motorario.svg) |
 | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Administrador/DdCdU-administrador.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Supervisor/DdCdU-supervisor.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Taquillero/DdCdU-taquillero.puml) | [Código fuente](/UML/00-requisitos/01-actores_casosDeUso/00-actores/Motorario/DdCdU-motorario.puml) |
 
 > Debido a la amplitud de responsabilidades operativas, el actor **Supervisor** se ha estructurado en **tres diagramas independientes** según su área funcional.

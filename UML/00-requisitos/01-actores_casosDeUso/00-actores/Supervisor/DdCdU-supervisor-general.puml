@@ -1,0 +1,64 @@
+@startuml diagrama-general-casos-uso-supervisor
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Supervisor" as supervisor
+
+package "Gestión De Máquinas" {
+    usecase consultarMaquina as "consultarMaquina()"
+    usecase registrarMaquina as "registrarMaquina()"
+    usecase editarMaquina as "editarMaquina()"
+    usecase darDeBajaMaquina as "darDeBajaMaquina()"
+    usecase darDeAltaMaquina as "darDeAltaMaquina()"
+    
+    usecase asignarMotorarioAMaquina as "asignarMotorarioAMaquina()"
+    usecase desasignarMotorarioAMaquina as "desasignarMotorarioAMaquina()"
+}
+
+package "Gestión De Plazas" {
+    usecase consultarPlaza as "consultarPlaza()"
+    usecase registrarPlaza as "registrarPlaza()"
+    usecase editarPlaza as "editarPlaza()"
+    usecase darDeBajaPlaza as "darDeBajaPlaza()"
+    usecase darDeAltaPlaza as "darDeAltaPlaza()"
+    
+    usecase asignarMaquinaAPlaza as "asignarMaquinaAPlaza()"
+    usecase desasignarMaquinaDePlaza as "desasignarMaquinaDePlaza()"
+
+    usecase asignarTaquilleroAPlaza as "asignarTaquilleroAPlaza()"
+    usecase desasignarTaquilleroDePlaza as "desasignarTaquilleroDePlaza()"
+}
+
+package "Gestión De Ventas" {
+    usecase revisarCierreDeCaja as "revisarCierreDeCaja()"
+    usecase autorizarReembolso as "autorizarReembolso()"
+    usecase anularVenta as "anularVenta()"
+}
+
+' --- Conexiones Gestión de Máquinas ---
+supervisor -- consultarMaquina
+supervisor -- registrarMaquina
+supervisor -- editarMaquina
+supervisor -- darDeBajaMaquina
+supervisor -- darDeAltaMaquina
+supervisor -- asignarMotorarioAMaquina
+supervisor -- desasignarMotorarioAMaquina
+
+' --- Conexiones Gestión de Plazas ---
+supervisor -- consultarPlaza
+supervisor -- registrarPlaza
+supervisor -- editarPlaza
+supervisor -- darDeBajaPlaza
+supervisor -- darDeAltaPlaza
+supervisor -- asignarMaquinaAPlaza
+supervisor -- desasignarMaquinaDePlaza
+supervisor -- asignarTaquilleroAPlaza
+supervisor -- desasignarTaquilleroDePlaza
+
+' --- Conexiones Gestión de Ventas ---
+supervisor -- revisarCierreDeCaja
+supervisor -- autorizarReembolso
+supervisor -- anularVenta
+
+@enduml
