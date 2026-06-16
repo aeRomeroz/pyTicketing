@@ -1,0 +1,28 @@
+  @startuml diagrama-modelo-del-dominio
+  
+  class Supervisor
+  class Taquillero
+  class Motorario
+  
+  class Maquina
+  class Plaza
+  class Venta
+  class Ticket
+  class CierreDeCaja
+  
+  Plaza o-- Maquina
+  
+  Maquina --> Motorario : operada por
+  Ticket --> Maquina : corresponde a
+  
+  Taquillero --> Venta : registra
+  Venta *-- Ticket
+  
+  CierreDeCaja --> Venta : consolida
+  Taquillero --> CierreDeCaja : realiza
+  Supervisor --> CierreDeCaja : revisa/confirma
+  
+  Supervisor --> Plaza : da de alta/baja
+  Supervisor --> Maquina : da de alta/baja
+  
+  @enduml
