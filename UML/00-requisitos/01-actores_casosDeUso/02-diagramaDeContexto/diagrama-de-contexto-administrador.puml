@@ -1,0 +1,57 @@
+@startuml diagrama-contexto-administrador
+
+left to right direction
+skinparam linetype polyline
+
+state "SESION_CERRADA" as NoAuth
+state "SISTEMA_DISPONIBLE" as Menu
+
+state "MAQUINAS_ABIERTO" as ListMaquinas
+state "MAQUINA_ABIERTO" as EditMaquina
+
+state "PLAZAS_ABIERTO" as ListPlazas
+state "PLAZA_ABIERTO" As EditPlaza
+
+state "VENTAS_ABIERTO" as ListVentas
+state "VENTA_ABIERTO" as EditVenta
+
+
+
+[*] --> NoAuth
+
+NoAuth --> Menu : iniciarSesion()
+
+Menu --> NoAuth : cerrarSesion()
+Menu --> ListMaquinas: abrirMaquinas()
+Menu --> ListPlazas: abrirPlazas()
+Menu --> ListVentas: abrirVentas()
+
+
+'MAQUINAS
+ListMaquinas --> EditMaquina: registrarMaquina()
+ListMaquinas --> EditMaquina: editarMaquina()
+ListMaquinas --> ListMaquinas: eliminarMaquina()
+
+EditMaquina --> ListMaquinas : abrirMaquinas
+
+
+'PLAZAS
+ListPlazas --> EditPlaza: registrarPlaza()
+ListPlazas --> EditPlaza: editarPlaza()
+ListPlazas --> ListPlazas: eliminarPlaza()
+
+EditPlaza --> ListPlazas: abrirPlazas()
+
+'VENTAS
+ListVentas --> EditVenta: registrarVenta()
+ListVentas -->  EditVenta: editarVenta()
+
+EditVenta --> ListVentas: abrirVentas()
+
+
+ListMaquinas --> Menu: completarGestion()
+ListPlazas --> Menu : completarGestion()
+ListVentas --> Menu : completarGestion()
+
+
+@enduml
