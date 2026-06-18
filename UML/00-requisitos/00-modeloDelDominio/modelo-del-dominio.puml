@@ -15,11 +15,12 @@
   Maquina --> Motorario : operada por
   Ticket --> Maquina : corresponde a
   
+  Taquillero --> Plaza : se asigna a
   Taquillero --> Venta : registra
   Venta *-- Ticket
   
   CierreDeCaja --> Venta : consolida
-  Taquillero --> CierreDeCaja : realiza
+  Taquillero *--> CierreDeCaja : realiza
   Supervisor --> CierreDeCaja : revisa/confirma
   
   Supervisor --> Plaza : da de alta/baja
