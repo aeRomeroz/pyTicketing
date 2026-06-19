@@ -15,43 +15,97 @@ state "PLAZA_ABIERTO" As EditPlaza
 state "VENTAS_ABIERTO" as ListVentas
 state "VENTA_ABIERTO" as EditVenta
 
+state "REEMBOLSOS_ABIERTO" as ListReembolsos
+state "REEMBOLSO_ABIERTO" as EditReembolso
+
+state "CIERRES_ABIERTO" as ListCierres
+state "CIERRE_ABIERTO" as EditCierre
+
+state "USUARIOS_ABIERTO" as ListUsuarios
+state "USUARIO_ABIERTO" as EditUsuario
 
 
 [*] --> NoAuth
 
 NoAuth --> Menu : iniciarSesion()
-
 Menu --> NoAuth : cerrarSesion()
+
+' Navegación desde el Menú Principal
 Menu --> ListMaquinas: abrirMaquinas()
 Menu --> ListPlazas: abrirPlazas()
 Menu --> ListVentas: abrirVentas()
+Menu --> ListCierres: abrirCierres()
+Menu --> ListReembolsos: abrirReembolsos()
+Menu --> ListUsuarios: abrirUsuarios()
 
 
-'MAQUINAS
+'MÓDULO: MÁQUINAS (Gestión y Asignación de Personal)
 ListMaquinas --> EditMaquina: registrarMaquina()
 ListMaquinas --> EditMaquina: editarMaquina()
 ListMaquinas --> ListMaquinas: eliminarMaquina()
 
-EditMaquina --> ListMaquinas : abrirMaquinas
+EditMaquina --> EditMaquina: editarMaquina()
+EditMaquina --> EditMaquina: asignarMotorario()
+EditMaquina --> EditMaquina: desasignarMotorario()
+EditMaquina --> ListMaquinas: abrirMaquinas()
 
 
-'PLAZAS
+' MÓDULO: PLAZAS (Gestión y Asignación de Control de Motorarios)
 ListPlazas --> EditPlaza: registrarPlaza()
 ListPlazas --> EditPlaza: editarPlaza()
 ListPlazas --> ListPlazas: eliminarPlaza()
 
+EditPlaza --> EditPlaza: editarPlaza()
+EditPlaza --> EditPlaza: asignarTaquillero()
+EditPlaza --> EditPlaza: desasignarTaquillero()
 EditPlaza --> ListPlazas: abrirPlazas()
 
-'VENTAS
-ListVentas --> EditVenta: registrarVenta()
-ListVentas -->  EditVenta: editarVenta()
 
+' MÓDULO: VENTAS (Integridad Contable)
+ListVentas --> EditVenta: registrarVenta()
+ListVentas -->  EditVenta: consultarVenta()
+
+EditVenta --> ListVentas: anularVenta()
 EditVenta --> ListVentas: abrirVentas()
 
 
+' MÓDULO: REEMBOLSOS
+ListReembolsos --> EditReembolso: solicitarReembolso()
+ListReembolsos --> EditReembolso: revisarReembolso()
+
+EditReembolso --> ListReembolsos: procesarReembolso()
+EditReembolso --> ListReembolsos: abrirReembolsos()
+
+
+' MÓDULO: CIERRES DE CAJA (Flujo de Auditoría)
+' Declaración inicial (Taquillero)
+ListCierres --> EditCierre: registrarCierreDeCaja()
+' Auditoría/Revisión (Supervisor)
+ListCierres --> EditCierre: revisarCierreDeCaja()
+' Corrección de rechazo (Taquillero)
+ListCierres --> EditCierre: editarCierreDeCaja()
+' Guardar decisión (Aprobar/Devolver)
+EditCierre --> ListCierres: procesarCierre()
+
+EditCierre --> ListCierres: abrirCierres()
+
+
+' MÓDULO: USUARIOS (Baja lógica integrada en Edición)
+ListUsuarios --> EditUsuario: registrarUsuario()
+ListUsuarios --> EditUsuario: editarUsuario()
+
+EditUsuario --> EditUsuario: editarUsuario()
+EditUsuario --> ListUsuarios: abrirUsuarios()
+
+
+'''''
 ListMaquinas --> Menu: completarGestion()
 ListPlazas --> Menu : completarGestion()
 ListVentas --> Menu : completarGestion()
+ListCierres --> Menu: completarGestion()
+ListReembolsos --> Menu: completarGestion()
+ListUsuarios --> Menu: completarGestion()
+
 
 
 @enduml
