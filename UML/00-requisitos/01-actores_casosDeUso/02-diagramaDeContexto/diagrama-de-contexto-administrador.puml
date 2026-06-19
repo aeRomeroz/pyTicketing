@@ -98,7 +98,7 @@ EditUsuario --> EditUsuario: editarUsuario()
 EditUsuario --> ListUsuarios: abrirUsuarios()
 
 
-'''''
+' Retorno al Menú Principal
 ListMaquinas --> Menu: completarGestion()
 ListPlazas --> Menu : completarGestion()
 ListVentas --> Menu : completarGestion()
