@@ -42,14 +42,14 @@ Los actores identificados para el sistema **pyTicketing** son:
 
 ## Diagramas de contexto
 
-Los diagramas de contexto representan el entorno operativo y la navegación entre estados para cada rol, permitiendo visualizar los flujos permitidos y las transiciones de estado en el sistema.
+El diagrama de contexto representa el entorno operativo y la navegación entre estados en el sistema, consolidando los flujos permitidos y las transiciones de estado de todos los actores en un único diseño global.
 
 <div align=center>
 
-| **Administrador** | **Supervisor** | **Taquillero** | **Motorario** |
-| :---: | :---: | :---: | :---: |
-| ![](/images/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Administrador.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Supervisor.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Taquillero.svg) | ![](/images/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Motorario.svg) |
-| [Ver código](/UML/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Administrador.puml) | [Ver código](/UML/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Supervisor.puml) | [Ver código](/UML/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Taquillero.puml) | [Ver código](/UML/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/Motorario.puml) |
+| **Diagrama de Contexto Global del Sistema** |
+| :---: |
+| ![](/images/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/diagrama-de-contexto-global.svg) |
+| [Ver código](/UML/00-requisitos/01-actores_casosDeUso/02-diagramaDeContexto/diagrama-de-contexto-global.puml) |
 
 </div>
 

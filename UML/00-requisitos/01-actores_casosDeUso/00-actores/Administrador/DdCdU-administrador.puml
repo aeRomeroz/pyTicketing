@@ -1,0 +1,23 @@
+@startuml diagrama-casos-uso-administrador
+
+left to right direction
+
+package "Gestión De Usuarios" {
+
+    actor "Administrador" as administrador
+
+    usecase crearUsuario as "crearUsuario()"
+    usecase consultarUsuario as "consultarUsuario()"
+    usecase editarUsuario as "editarUsuario()"
+    usecase desactivarUsuario as "desactivarUsuario()"
+    usecase reactivarUsuario as "reactivarUsuario()"
+ 
+}
+
+administrador --> crearUsuario
+administrador --> consultarUsuario
+administrador --> editarUsuario
+administrador --> desactivarUsuario
+administrador --> reactivarUsuario
+
+@enduml

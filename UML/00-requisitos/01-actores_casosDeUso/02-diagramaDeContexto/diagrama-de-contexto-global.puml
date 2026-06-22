@@ -1,4 +1,4 @@
-@startuml diagrama-contexto-administrador
+@startuml diagrama-contexto-global
 
 left to right direction
 skinparam linetype polyline
@@ -10,7 +10,7 @@ state "MAQUINAS_ABIERTO" as ListMaquinas
 state "MAQUINA_ABIERTO" as EditMaquina
 
 state "PLAZAS_ABIERTO" as ListPlazas
-state "PLAZA_ABIERTO" As EditPlaza
+state "PLAZA_ABIERTO" as EditPlaza
 
 state "VENTAS_ABIERTO" as ListVentas
 state "VENTA_ABIERTO" as EditVenta
@@ -45,8 +45,8 @@ ListMaquinas --> EditMaquina: editarMaquina()
 ListMaquinas --> ListMaquinas: eliminarMaquina()
 
 EditMaquina --> EditMaquina: editarMaquina()
-EditMaquina --> EditMaquina: asignarMotorario()
-EditMaquina --> EditMaquina: desasignarMotorario()
+EditMaquina --> EditMaquina: asignarMotorarioAMaquina()
+EditMaquina --> EditMaquina: desasignarMotorarioDeMaquina()
 EditMaquina --> ListMaquinas: abrirMaquinas()
 
 
@@ -56,8 +56,10 @@ ListPlazas --> EditPlaza: editarPlaza()
 ListPlazas --> ListPlazas: eliminarPlaza()
 
 EditPlaza --> EditPlaza: editarPlaza()
-EditPlaza --> EditPlaza: asignarTaquillero()
-EditPlaza --> EditPlaza: desasignarTaquillero()
+EditPlaza --> EditPlaza: asignarTaquilleroAPlaza()
+EditPlaza --> EditPlaza: desasignarTaquilleroDePlaza()
+EditPlaza --> EditPlaza: asignarMaquinaAPlaza()
+EditPlaza --> EditPlaza: desasignarMaquinaDePlaza()
 EditPlaza --> ListPlazas: abrirPlazas()
 
 
@@ -93,6 +95,7 @@ EditCierre --> ListCierres: abrirCierres()
 ' MÓDULO: USUARIOS (Baja lógica integrada en Edición)
 ListUsuarios --> EditUsuario: registrarUsuario()
 ListUsuarios --> EditUsuario: editarUsuario()
+ListUsuarios --> EditUsuario: consultarUsuario()
 
 EditUsuario --> EditUsuario: editarUsuario()
 EditUsuario --> ListUsuarios: abrirUsuarios()
