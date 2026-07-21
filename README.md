@@ -1,6 +1,21 @@
-# 🎟️ pyTicketing — Sistema de Gestión de Tickets
+<h1 align="center">pyTicketing - Sistema de Gestión de Tickets</h1>
 
-> **Control integral para parques itinerantes: desde la taquilla hasta la atracción.**
+<h4 align="center">Control integral para parques itinerantes: desde la taquilla hasta la atracción.
+</h2>
+
+<div align="center">
+
+[![](https://img.shields.io/badge/-Inicio-111827?style=for-the-badge&logo=github&logoColor=white)](/README.md)
+[![](https://img.shields.io/badge/-Modelo_del_Dominio-B03B00?style=for-the-badge&logo=drawio&logoColor=white)](/documents/00-requisitos/00-modeloDelDominio/README.md)
+[![](https://img.shields.io/badge/-Actores_Y_Casos_de_Uso-B03B00?style=for-the-badge&logo=use-case&logoColor=white)](/documents/00-requisitos/01-actores-casosDeUso/00-actores/README.md)
+[![](https://img.shields.io/badge/-Diagramas_de_Contexto-B03B00?style=for-the-badge&logo=flowchart&logoColor=white)](/documents/00-requisitos/01-actores-casosDeUso/02-diagramaDeContexto/README.md)
+[![](https://img.shields.io/badge/-Detalle_de_Casos_de_Uso-B03B00?style=for-the-badge&logo=notepad&logoColor=white)](/documents/00-requisitos/01-actores-casosDeUso/04-detalladoCasosDeUso/README.md)
+[![](https://img.shields.io/badge/-Análisis-B03B00?style=for-the-badge&logo=uml&logoColor=white)](/documents/01-analisis/casosDeUso/README.md)
+[![](https://img.shields.io/badge/-Diseño-B03B00?style=for-the-badge&logo=uml&logoColor=white)](/documents/02-diseño/README.md)
+[![](https://img.shields.io/badge/-Desarrollo-B03B00?style=for-the-badge&logo=code&logoColor=white)](/documents/03-desarrollo/README.md)
+
+
+</div>
 
 [![Methodology](https://img.shields.io/badge/Methodology-RUP-0A3B64?style=for-the-badge)](https://en.wikipedia.org/wiki/Rational_Unified_Process)
 [![Stage](https://img.shields.io/badge/Stage-Requirements-success?style=for-the-badge)](./documents/00-requisitos/)
@@ -35,16 +50,16 @@ El sistema interactúa con cuatro roles principales, cada uno con responsabilida
 
 Se han identificado un total de **27 casos de uso**, organizados para cubrir todas las necesidades operativas:
 
-### [➔ Ver Detalle Completo de Casos de Uso](./documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/README.md)
+### [➔ Ver Detalle Completo de Casos de Uso](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/README.md)
 
 | Área / Actor | Casos de Uso | Documentación |
 | :--- | :---: | :---: |
-| **Administración de Usuarios** | 5 | [📂 Ver](./documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Administrador/README.md) |
-| **Gestión de Plazas (Supervisor)** | 9 | [📂 Ver](./documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md) |
-| **Gestión de Máquinas (Supervisor)** | 6 | [📂 Ver](./documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Maquina/README.md) |
-| **Gestión de Ventas (Supervisor)** | 3 | [📂 Ver](./documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Supervisor/Venta/README.md) |
-| **Operaciones de Taquilla** | 3 | [📂 Ver](./documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Taquillero/README.md) |
-| **Reportes de Atracción (Motorario)** | 1 | [📂 Ver](./documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/Motorario/README.md) |
+| **Administración de Usuarios** | 5 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Administrador/README.md) |
+| **Gestión de Plazas (Supervisor)** | 9 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md) |
+| **Gestión de Máquinas (Supervisor)** | 6 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Supervisor/Maquina/README.md) |
+| **Gestión de Ventas (Supervisor)** | 3 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Supervisor/Venta/README.md) |
+| **Operaciones de Taquilla** | 3 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Taquillero/README.md) |
+| **Reportes de Atracción (Motorario)** | 1 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Motorario/README.md) |
 
 ---
 
@@ -58,7 +73,7 @@ pyTicketing/
 ├── 📂 documents/
 │   └── 📂 00-requisitos/       # Artefactos de la fase de requisitos
 │       ├── 📂 00-modeloDelDominio/
-│       └── 📂 01-actores_casosDeUso/
+│       └── 📂 01-actores-casosDeUso/
 ├── 📂 images/                  # Diagramas exportados (SVG)
 └── 📂 UML/                     # Código fuente de diagramas (PlantUML)
 ```
@@ -75,8 +90,8 @@ Los diagramas detallados utilizan una convención de colores para facilitar su l
 
 - [📖 Glosario de Términos](./documents/00-requisitos/00-modeloDelDominio/Glosario/README.md)
 - [🗺️ Modelo del Dominio](./documents/00-requisitos/00-modeloDelDominio/README.md)
-- [📊 Diagramas de Contexto](./documents/00-requisitos/01-actores_casosDeUso/01-casosDeUso/README.md#diagramas-de-contexto)
-- [📐 Casos de Uso Detallados](./documents/00-requisitos/01-actores_casosDeUso/04-detalladoCasosDeUso/README.md)
+- [📊 Diagramas de Contexto](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/README.md#diagramas-de-contexto)
+- [📐 Casos de Uso Detallados](./documents/00-requisitos/01-actores-casosDeUso/04-detalladoCasosDeUso/README.md)
 
 ---
 <p align="center">
