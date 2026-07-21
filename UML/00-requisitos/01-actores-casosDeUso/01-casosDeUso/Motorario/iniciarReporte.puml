@@ -44,7 +44,7 @@ note on link
 reportarTicketsRecibidos(maquina)
 end note
 
-iniciarReporte -[#red]-> MAQUINA_ABIERTA
+iniciarReporte -[#blue]-> MAQUINA_ABIERTA
 note on link
 cancelar inicio
 end note

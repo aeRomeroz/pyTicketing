@@ -44,7 +44,7 @@ note on link
 consultarMaquina(maquina)
 end note
 
-finalizarReporte -[#red]-> REPORTE_ABIERTO
+finalizarReporte -[#blue]-> REPORTE_ABIERTO
 note on link
 cancelar finalización
 end note

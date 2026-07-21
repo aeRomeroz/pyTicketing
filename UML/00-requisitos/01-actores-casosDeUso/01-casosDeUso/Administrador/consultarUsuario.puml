@@ -4,32 +4,44 @@ skinparam linetype polyline
 
 state consultarUsuario as "consultarUsuario(usuario)" {
 
-    state " " as PresentandoDetalle
+    state " " as RequiringConsultation
+    state " " as ProvidingDetails
+    state c <<choice>>
 
-    [*] -[#green]-> PresentandoDetalle
+    [*] -[#green]-> RequiringConsultation
     note on link
-    <b>Administrador</b> selecciona un usuario del listado para consultar
+    <b>Administrador</b> solicita consultar usuario
     end note
-    
-    PresentandoDetalle -[#green]-> [*]
+
+    RequiringConsultation -[#green]-> ProvidingDetails
     note on link
-    <b>Sistema</b> presenta la ficha detallada del usuario
-    • Nombre de usuario (solo lectura)
-    • Rol asignado (solo lectura)
-    • Estado: Activo / Inactivo (solo lectura)
-    • Permite solicitar editar usuario
-    • Permite solicitar cerrar/volver
+    <b>Sistema</b> presenta
+    • ficha detallada del usuario (nombre, rol, estado)
+    • opción para editar o volver al listado
+    • mensaje si el usuario no existe
+    end note
+
+    ProvidingDetails -[#green]-> c
+    note on link
+    <b>Administrador</b> solicita
+    • continuar consultando
+    • salir de consulta
+    end note
+
+    c -[#green]-> ProvidingDetails
+    note on link
+    continuar navegando
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    salir de consulta
     end note
 }
 
-consultarUsuario -[#green]-> USUARIO_ABIERTO
+consultarUsuario -[#green]-> USUARIOS_ABIERTO
 note on link
-editarUsuario(usuario)
-end note
-
-consultarUsuario -[#blue]-> USUARIOS_ABIERTO
-note on link
-cerrar / volver
+completarGestion()
 end note
 
 @enduml

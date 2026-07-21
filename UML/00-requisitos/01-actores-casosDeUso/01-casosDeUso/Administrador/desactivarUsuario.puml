@@ -31,10 +31,10 @@ state desactivarUsuario as "desactivarUsuario(usuario)" {
 
 desactivarUsuario -[#green]-> USUARIOS_ABIERTO
 note on link
-desactivación confirmada
+completarGestion()
 end note
 
-desactivarUsuario -[#red]-> USUARIOS_ABIERTO
+desactivarUsuario -[#blue]-> USUARIOS_ABIERTO
 note on link
 cancelar desactivación
 end note

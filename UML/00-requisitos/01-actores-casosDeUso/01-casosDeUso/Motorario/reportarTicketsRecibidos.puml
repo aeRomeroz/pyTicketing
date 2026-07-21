@@ -44,7 +44,7 @@ note on link
 continuar lecturas
 end note
 
-reportarTicketsRecibidos -[#red]-> REPORTE_ABIERTO
+reportarTicketsRecibidos -[#blue]-> REPORTE_ABIERTO
 note on link
 cancelar lectura
 end note

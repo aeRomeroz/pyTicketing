@@ -29,12 +29,12 @@ state reactivarUsuario as "reactivarUsuario(usuario)" {
     end note
 }
 
-reactivarUsuario -[#green]-> USUARIO_ABIERTO
+reactivarUsuario -[#green]-> USUARIOS_ABIERTO
 note on link
-consultarUsuario(usuario)
+completarGestion()
 end note
 
-reactivarUsuario -[#red]-> USUARIOS_ABIERTO
+reactivarUsuario -[#blue]-> USUARIOS_ABIERTO
 note on link
 cancelar reactivación
 end note

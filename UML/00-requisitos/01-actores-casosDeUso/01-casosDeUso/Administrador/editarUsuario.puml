@@ -34,7 +34,7 @@ note on link
 consultarUsuario(usuarioModificado)
 end note
 
-editarUsuario -[#red]-> USUARIOS_ABIERTO
+editarUsuario -[#blue]-> USUARIOS_ABIERTO
 note on link
 cancelar edición
 end note
