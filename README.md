@@ -14,12 +14,12 @@
 [![](https://img.shields.io/badge/-Diseño-B03B00?style=for-the-badge&logo=uml&logoColor=white)](/documents/02-diseño/README.md)
 [![](https://img.shields.io/badge/-Desarrollo-B03B00?style=for-the-badge&logo=code&logoColor=white)](/documents/03-desarrollo/README.md)
 
-
-</div>
-
 [![Methodology](https://img.shields.io/badge/Methodology-RUP-0A3B64?style=for-the-badge)](https://en.wikipedia.org/wiki/Rational_Unified_Process)
 [![Stage](https://img.shields.io/badge/Stage-Requirements-success?style=for-the-badge)](./documents/00-requisitos/)
 [![UML](https://img.shields.io/badge/Diagrams-PlantUML-orange?style=for-the-badge)](http://plantuml.com)
+
+</div>
+
 
 **pyTicketing** es una solución técnica diseñada para la gestión operativa y financiera de parques de atracciones itinerantes. El sistema cubre todo el ciclo de vida del ticket, desde su emisión en taquilla hasta su validación en la atracción y el posterior cierre de caja.
 

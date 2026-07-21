@@ -1,75 +1,77 @@
 # Modelo del Dominio y Glosario de Términos
 
-Este documento constituye la **fuente de verdad** para el lenguaje y la estructura del negocio del sistema **pyTicketing**. Aquí se definen tanto las entidades y sus relaciones como el significado de cada término técnico y operativo.
 
----
+Este documento describe el modelo conceptual del dominio para el Sistema Gestionador de Tickets (pyTicketing). El modelo establece el vocabulario común y las relaciones fundamentales entre las entidades del negocio de ferias itinerantes, enfocándose en los conceptos esenciales de la generación y trazabilidad de tickets dentro de un parque de atracciones.
 
-## 📊 Diagrama del Modelo del Dominio
+## Propósito
+- Establecer un vocabulario común entre desarrolladores, supervisores y personal operativo.
+- Definir las reglas de negocio para la emisión, validación y consolidación de ingresos.
+- Servir como base conceptual para el diseño de la base de datos y casos de uso.
 
-El siguiente diagrama representa las entidades clave del sistema y cómo interactúan entre sí según las reglas de negocio identificadas.
+## Diagrama del Modelo del Dominio
 
 ![Modelo del Dominio](../../../images/00-requisitos/00-modeloDelDominio/modelo-del-dominio.svg)
 
 > [Ver código fuente (PlantUML)](../../../UML/00-requisitos/00-modeloDelDominio/modelo-del-dominio.puml)
 
----
+## Problema que resuelve
+El sistema garantiza la **trazabilidad financiera y operativa** asegurando que:
+1. **Venta válida:** Todo ticket emitido por un Taquillero pertenezca a una Venta registrada.
+2. **Acceso único:** Cada ticket autorice el acceso a una única Máquina (atracción).
+3. **Cuadre de caja:** La suma de Ventas individuales coincida exactamente con el Cierre de Caja del turno.
 
 ## 📖 Glosario de Términos
 
-### 🏗️ Entidades de Negocio
+### Entidades y Roles
 
-#### Plaza
-Espacio físico o ubicación geográfica donde se instala el parque itinerante. Una plaza agrupa un conjunto de máquinas y taquilleros durante un periodo de tiempo determinado.
+| Entidad / Rol | Tipo | Descripción |
+| :--- | :--- | :--- |
+| **Plaza** | Entidad | Ubicación geográfica temporal donde se instala el parque e itineran máquinas y personal. |
+| **Máquina** | Entidad | Atracción física (ej. Noria, Coches de choque) con aforo y estado operativo. |
+| **Venta** | Entidad | Registro de la transacción comercial realizada en caja que agrupa uno o varios tickets emitidos. |
+| **Ticket** | Entidad | Comprobante que otorga el derecho de acceso a una atracción específica. |
+| **Taquillero** | Rol | Personal responsable de la emisión de tickets y el arqueo de caja. |
+| **Motorario** | Rol | Operador de máquina encargado del control de acceso y lectura del ticket. |
+| **Supervisor** | Rol | Encargado de la logística, asignaciones y validación de cierres financieros. |
 
-#### Máquina (Atracción)
-Unidad operativa del parque (ej. montaña rusa, carrusel). Cada máquina tiene un aforo, un estado (activa/baja) y requiere de un motorario para su validación.
+### Procesos Financieros y Operaciones
 
-#### Ticket
-Documento (físico o digital) que representa el derecho de acceso a una atracción. Contiene información sobre la venta y su estado de validez.
+| Proceso / Operación | Tipo | Descripción |
+| :--- | :--- | :--- |
+| **Anulación de Venta** | Operación | Cancelación de una transacción realizada por el Taquillero durante su turno. Invalida los tickets asociados y revierte el importe en caja. |
+| **Cierre de Caja** | Proceso | Consolidación diaria o por turno de todas las ventas realizadas, ejecutada por el Taquillero. |
+| **Revisión de Caja** | Proceso | Verificación del Cierre de Caja ejecutada por el Supervisor contra los registros del sistema y el dinero físico recaudado. |
+| **Reembolso** | Proceso | Devolución del importe de un ticket al cliente tras su emisión. Requiere **Autorización de Reembolso** por parte del Supervisor. |
+| **Asignación** | Operación | Vinculación temporal de un recurso humano (Taquillero, Motorario) o material (Máquina) a una entidad operativa (Plaza). |
 
----
+### Ciclo de Vida y Estados del Dominio
 
-### 👥 Roles y Actores
+| Entidad | Estado | Descripción |
+| :--- | :--- | :--- |
+| **Máquina / Plaza** | **Alta / Activa** | La entidad está disponible e integrada en la operativa del parque para recibir o vender tickets. |
+| **Máquina / Plaza** | **Baja / Inactiva** | Inactivación de la entidad (por mantenimiento o final de temporada) sin eliminar su historial contable o de uso. |
+| **Ticket** | **Válido / Consumido / Anulado** | Representa la validez del acceso: listo para usar, ya validado por el Motorario, o cancelado comercialmente. |
+| **Venta** | **Completada / Anulada / Reembolsada** | Refleja el estado contable final de la transacción económica en el sistema. |
 
-#### Administrador
-Usuario con permisos de nivel de sistema encargado de gestionar las cuentas de usuario, perfiles y permisos. No interviene directamente en la operación diaria del parque.
+## Relaciones del Modelo
 
-#### Supervisor
-Responsable de la logística y supervisión financiera. Gestiona la creación de plazas, máquinas y las asignaciones de personal. Valida los procesos críticos como reembolsos y revisiones de caja.
+### Relaciones Operativas y de Infraestructura
+- **Plaza contiene Máquinas:** Una plaza física agrupa las atracciones disponibles en esa ubicación.
+- **Motorario opera Máquina:** Asignación del personal responsable de validar la entrada.
 
-#### Taquillero
-Personal encargado del punto de venta. Sus funciones principales son la emisión de tickets, la gestión de anulaciones inmediatas y la preparación del cierre de caja al finalizar su turno.
+### Relaciones Comerciales y de Servicio
+- **Venta contiene Tickets:** Una transacción de compra genera uno o varios tickets individuales.
+- **Ticket autoriza Máquina:** El ticket vincula el pago con el derecho de uso de una atracción específica.
 
-#### Motorario
-Operador asignado a una máquina específica. Su responsabilidad es validar los tickets recibidos y reportar la actividad de la máquina para el control de aforo y estadísticas de uso.
+### Relaciones Contables
+- **Cierre de Caja consolida Ventas:** El resumen diario agrupa todas las ventas del turno.
+- **Taquillero realiza Cierre de Caja:** Un taquillero es responsable de sus cierres de turno (asociación simple para mantener historial si el usuario cambia).
 
----
+## Decisiones de Diseño y Semántica del Modelo
 
-### 💰 Procesos Financieros
-
-#### Cierre de Caja (Consolidación)
-Proceso realizado por el Taquillero al finalizar su jornada, donde se suma el total de ventas realizadas y se prepara el reporte para su posterior validación.
-
-#### Revisión de Caja
-Acción ejecutada por el Supervisor para validar que la consolidación realizada por el Taquillero coincide con los registros del sistema y el dinero físico recaudado.
-
-#### Anulación de Venta
-Cancelación de una transacción de venta. Puede ser realizada por el Taquillero (en condiciones normales) o requerir intervención del Supervisor si existen discrepancias.
-
-#### Reembolso
-Proceso mediante el cual se devuelve el importe de un ticket al cliente. Debido a su impacto financiero, requiere de una **Autorización de Reembolso** explita por parte del Supervisor.
-
----
-
-### ⚙️ Estados y Operaciones
-
-#### Asignación
-Acto de vincular un recurso humano (Taquillero, Motorario) o material (Máquina) a una entidad organizativa (Plaza) para un periodo de tiempo.
-
-#### Dar de Baja / Reactivar
-Cambio de estado de una entidad (Usuario, Plaza o Máquina) que impide o permite su uso en el sistema sin eliminar sus registros históricos.
-
----
-<p align="center">
-  <i>Este documento es un artefacto vivo y debe actualizarse ante cualquier cambio en las definiciones de negocio.</i>
-</p>
+- **Agregación en lugar de Composición entre Taquillero y CierreDeCaja (`-->`):**
+  * *Decisión:* Se utiliza una asociación simple en lugar de composición (`*-->`).
+  * *Justificación:* Garantiza la integridad contable. Si un usuario `Taquillero` es dado de baja o eliminado, sus registros históricos de `CierreDeCaja` permanecen intactos para auditorías.
+- **Independencia del Ticket respecto a la Máquina:**
+  * *Decisión:* El `Ticket` nace de una `Venta` y referencia a una `Maquina`.
+  * *Justificación:* Separa el evento financiero (cobro) de la prestación del servicio (uso de la atracción).
