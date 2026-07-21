@@ -20,7 +20,7 @@
   Venta *-- Ticket
   
   CierreDeCaja --> Venta : consolida
-  Taquillero *--> CierreDeCaja : realiza
+  Taquillero --> CierreDeCaja : realiza
   Supervisor --> CierreDeCaja : revisa/confirma
   
   Supervisor --> Plaza : da de alta/baja
