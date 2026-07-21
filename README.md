@@ -1,7 +1,10 @@
-<h1 align="center">pyTicketing - Sistema de Gestión de Tickets</h1>
+<div align="center">
 
-<h4 align="center">Control integral para parques itinerantes: desde la taquilla hasta la atracción.
-</h2>
+# pyTicketing - Sistema de Gestión de Tickets
+
+#### Control integral para parques itinerantes: desde la taquilla hasta la atracción.
+
+</div>
 
 <div align="center">
 
@@ -20,80 +23,61 @@
 
 </div>
 
+---
 
-**pyTicketing** es una solución técnica diseñada para la gestión operativa y financiera de parques de atracciones itinerantes. El sistema cubre todo el ciclo de vida del ticket, desde su emisión en taquilla hasta su validación en la atracción y el posterior cierre de caja.
+**pyTicketing** es una solución de ingeniería de software diseñada para la gestión operativa y financiera de parques de atracciones itinerantes. El sistema cubre todo el ciclo de vida del ticket: desde su emisión en taquilla hasta su validación en la atracción y el posterior cierre de caja.
 
 ---
 
 ## 🏗️ Metodología y Estado del Proyecto
 
-Este proyecto se desarrolla siguiendo la metodología **RUP (Rational Unified Process)**, garantizando una aproximación disciplinada a la asignación de tareas y responsabilidades.
+Este proyecto se desarrolla siguiendo la metodología **RUP (Rational Unified Process)**, garantizando un enfoque riguroso en la definición de requisitos, análisis, diseño e implementación.
 
-Actualmente, el proyecto se encuentra en la fase de **Requisitos**, con un enfoque exhaustivo en la identificación de actores y la definición detallada de casos de uso mediante diagramas de estados.
+Actualmente, el proyecto se encuentra en la fase de **Requisitos**, enfocado en la identificación de actores, estructuración de casos de uso y definición conceptual del modelo del dominio.
 
 ---
 
 ## 👥 Actores del Sistema
 
-El sistema interactúa con cuatro roles principales, cada uno con responsabilidades claramente definidas:
+El sistema define cuatro roles clave para cubrir el flujo operativo y contable:
 
 | Actor | Responsabilidad Principal |
 | :--- | :--- |
-| **🔑 Administrador** | Gestión de identidades y accesos (Usuarios del sistema). |
-| **👮 Supervisor** | Coordinación operativa de plazas, máquinas y control financiero. |
-| **🎫 Taquillero** | Punto de venta: registro de transacciones y atención al público. |
-| **🎡 Motorario** | Validación y control de aforo en las atracciones. |
+| **Administrador** | Gestión de identidades y accesos (usuarios del sistema). |
+| **Supervisor** | Coordinación operativa de plazas, máquinas y control financiero. |
+| **Taquillero** | Punto de venta: registro de transacciones y atención al público. |
+| **Motorario** | Validación de tickets y control de aforo en las atracciones. |
 
 ---
 
-## 📋 Resumen de Casos de Uso
+## 📋 Resumen de Casos de Uso (27 Identificados)
 
-Se han identificado un total de **27 casos de uso**, organizados para cubrir todas las necesidades operativas:
+Los requisitos funcionales están estructurados por módulo operativo:
 
-### [➔ Ver Detalle Completo de Casos de Uso](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/README.md)
-
-| Área / Actor | Casos de Uso | Documentación |
+| Área / Actor | Cantidad | Documentación |
 | :--- | :---: | :---: |
-| **Administración de Usuarios** | 5 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Administrador/README.md) |
-| **Gestión de Plazas (Supervisor)** | 9 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md) |
-| **Gestión de Máquinas (Supervisor)** | 6 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Supervisor/Maquina/README.md) |
-| **Gestión de Ventas (Supervisor)** | 3 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Supervisor/Venta/README.md) |
-| **Operaciones de Taquilla** | 3 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Taquillero/README.md) |
-| **Reportes de Atracción (Motorario)** | 1 | [📂 Ver](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Motorario/README.md) |
+| **Administración de Usuarios** | 5 | [📂 Ver Casos de Uso](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Administrador/README.md) |
+| **Gestión de Plazas** *(Supervisor)* | 9 | [📂 Ver Casos de Uso](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Supervisor/Plaza/README.md) |
+| **Gestión de Máquinas** *(Supervisor)* | 6 | [📂 Ver Casos de Uso](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Supervisor/Maquina/README.md) |
+| **Gestión de Ventas** *(Supervisor)* | 3 | [📂 Ver Casos de Uso](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Supervisor/Venta/README.md) |
+| **Operaciones de Taquilla** *(Taquillero)* | 3 | [📂 Ver Casos de Uso](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Taquillero/README.md) |
+| **Reportes de Atracción** *(Motorario)* | 1 | [📂 Ver Casos de Uso](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Motorario/README.md) |
+
+> ➔ [**Ver detalle completo de Casos de Uso**](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/README.md)
 
 ---
 
 ## 🛠️ Estructura de Documentación
 
-El repositorio está organizado siguiendo el flujo de trabajo de RUP:
+El repositorio organiza sus artefactos garantizando la separación entre documentación, diagramas exportados y código fuente PlantUML:
 
 ```bash
 pyTicketing/
-├── 📄 README.md                # Presentación del proyecto
-├── 📂 documents/
-│   └── 📂 00-requisitos/       # Artefactos de la fase de requisitos
-│       ├── 📂 00-modeloDelDominio/
-│       └── 📂 01-actores-casosDeUso/
-├── 📂 images/                  # Diagramas exportados (SVG)
-└── 📂 UML/                     # Código fuente de diagramas (PlantUML)
-```
-
-### 🎨 Convención de Diagramas
-Los diagramas detallados utilizan una convención de colores para facilitar su lectura:
-- **🟢 Verde:** Flujo principal / Éxito.
-- **🔴 Rojo:** Flujo alternativo / Cancelación.
-- **🔵 Azul:** Punto de finalización.
-
----
-
-## 🔗 Enlaces Rápidos
-
-- [📖 Glosario de Términos](./documents/00-requisitos/00-modeloDelDominio/Glosario/README.md)
-- [🗺️ Modelo del Dominio](./documents/00-requisitos/00-modeloDelDominio/README.md)
-- [📊 Diagramas de Contexto](./documents/00-requisitos/01-actores-casosDeUso/01-casosDeUso/README.md#diagramas-de-contexto)
-- [📐 Casos de Uso Detallados](./documents/00-requisitos/01-actores-casosDeUso/04-detalladoCasosDeUso/README.md)
-
----
-<p align="center">
-  Desarrollado con rigor técnico bajo los estándares de Ingeniería del Software.
-</p>
+├── 📄 README.md                 # Presentación principal del proyecto
+├── 📂 documents/                 # Artefactos de las fases RUP
+│   ├── 📂 00-requisitos/        # Requisitos, Modelo del Dominio y Casos de Uso
+│   ├── 📂 01-analisis/          # Modelo de análisis
+│   ├── 📂 02-diseño/            # Diseño de software y arquitectura
+│   └── 📂 03-desarrollo/        # Código fuente e implementación
+├── 📂 images/                   # Diagramas exportados en SVG
+└── 📂 UML/                      # Código fuente de diagramas (PlantUML)
