@@ -1,45 +1,35 @@
 @startuml CU08_ConsultarUsuario
-title Consultar Usuario
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state USUARIOS_ABIERTO_INICIAL as "USUARIOS_ABIERTO"
-state USUARIO_ABIERTO as "USUARIO_ABIERTO"
-state USUARIOS_ABIERTO_FINAL as "USUARIOS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> USUARIOS_ABIERTO_INICIAL
+state consultarUsuario as "consultarUsuario(usuario)" {
 
-USUARIOS_ABIERTO_INICIAL -[#green]-> USUARIO_ABIERTO : consultarUsuario()
-note left on link
-    <b>Administrador solicita</b> consultar el detalle
-    de un usuario existente.
-    <b>Sistema presenta</b> la ficha completa
-    del usuario.
-end note
+    state " " as PresentandoDetalle
 
-state USUARIO_ABIERTO {
-    state VisualizacionUsuario as "Visualización de Usuario"
-
-    [*] -[#green]-> VisualizacionUsuario
-    note right of VisualizacionUsuario
-        <b>Sistema muestra</b> los datos del usuario:
-        nombre, rol y estado (activo/inactivo).
-        <b>Sistema permite solicitar</b> editar mediante
-        editarUsuario().
+    [*] -[#green]-> PresentandoDetalle
+    note on link
+    <b>Administrador</b> selecciona un usuario del listado para consultar
     end note
-
-    VisualizacionUsuario -[#green]-> [*]
+    
+    PresentandoDetalle -[#green]-> [*]
+    note on link
+    <b>Sistema</b> presenta la ficha detallada del usuario
+    • Nombre de usuario (solo lectura)
+    • Rol asignado (solo lectura)
+    • Estado: Activo / Inactivo (solo lectura)
+    • Permite solicitar editar usuario
+    • Permite solicitar cerrar/volver
+    end note
 }
 
-USUARIO_ABIERTO -[#red]-> USUARIOS_ABIERTO_FINAL : cerrarUsuario()
-note right on link
-    <b>CERRAR:</b>
-    <b>Administrador solicita</b> salir de la ficha.
-    <b>Sistema presenta</b> el listado de usuarios.
+consultarUsuario -[#green]-> USUARIO_ABIERTO
+note on link
+editarUsuario(usuario)
 end note
 
-USUARIOS_ABIERTO_FINAL -[#blue]-> [*]
+consultarUsuario -[#blue]-> USUARIOS_ABIERTO
+note on link
+cerrar / volver
+end note
 
 @enduml

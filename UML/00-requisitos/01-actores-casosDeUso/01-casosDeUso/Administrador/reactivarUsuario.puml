@@ -1,61 +1,42 @@
 @startuml CU27_ReactivarUsuario
-title Reactivar Usuario
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state USUARIOS_ABIERTO_INICIAL as "USUARIOS_ABIERTO"
-state USUARIO_ABIERTO as "USUARIO_ABIERTO"
-state USUARIOS_ABIERTO_FINAL as "USUARIOS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> USUARIOS_ABIERTO_INICIAL
+state reactivarUsuario as "reactivarUsuario(usuario)" {
 
-USUARIOS_ABIERTO_INICIAL -[#green]-> USUARIO_ABIERTO : reactivarUsuario()
-note left on link
-    <b>Administrador solicita</b> reactivar un usuario
-    previamente desactivado.
-    <b>Sistema presenta</b> la ficha del usuario
-    con la opción de confirmar la reactivación.
-end note
+    state " " as SolicitandoConfirmacion
+    state " " as ReactivandoUsuario
 
-state USUARIO_ABIERTO {
-    state VisualizacionUsuario as "Visualización de Usuario"
-    state ConfirmacionReactivacion as "Confirmación de Reactivación"
-
-    [*] -[#green]-> VisualizacionUsuario
-    note right of VisualizacionUsuario
-        <b>Sistema muestra</b> los datos del usuario
-        y advierte que la reactivación restaurará
-        su acceso al sistema.
-        <b>Administrador puede solicitar</b> confirmar
-        mediante ejecutarReactivacion().
+    [*] -[#green]-> SolicitandoConfirmacion
+    note on link
+    <b>Administrador</b> solicita reactivar a un usuario inactivo del listado
     end note
 
-    VisualizacionUsuario -[#green]-> ConfirmacionReactivacion : ejecutarReactivacion()
-    note right of ConfirmacionReactivacion
-        <b>Sistema marca</b> el usuario como activo.
-        <b>Sistema restaura</b> su acceso al sistema
-        con el rol que tenía asignado.
+    SolicitandoConfirmacion -[#green]-> ReactivandoUsuario
+    note on link
+    <b>Sistema</b> presenta la ficha del usuario inactivo
+    • Datos del usuario (solo lectura)
+    • Estado actual: Inactivo
+    • Mensaje explicativo (se restaurará su acceso al sistema con su rol asignado)
+    • Permite solicitar confirmar reactivación
+    • Permite solicitar cancelar operación
     end note
 
-    ConfirmacionReactivacion -[#green]-> [*]
+    ReactivandoUsuario -[#green]-> [*]
+    note on link
+    <b>Administrador</b> confirma la reactivación
+    <b>Sistema</b> marca el usuario como activo, restaura sus permisos y guarda cambios
+    end note
 }
 
-USUARIO_ABIERTO -[#green]-> USUARIOS_ABIERTO_FINAL : confirmarReactivacion()
-note left on link
-    <b>Sistema confirma</b> la reactivación del usuario
-    y regresa al listado de usuarios.
+reactivarUsuario -[#green]-> USUARIO_ABIERTO
+note on link
+consultarUsuario(usuario)
 end note
 
-USUARIO_ABIERTO -[#red]-> USUARIOS_ABIERTO_FINAL : cancelarReactivacion()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Administrador solicita</b> cancelar la operación.
-    <b>Sistema mantiene</b> el usuario inactivo
-    y regresa al listado de usuarios.
+reactivarUsuario -[#red]-> USUARIOS_ABIERTO
+note on link
+cancelar reactivación
 end note
-
-USUARIOS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

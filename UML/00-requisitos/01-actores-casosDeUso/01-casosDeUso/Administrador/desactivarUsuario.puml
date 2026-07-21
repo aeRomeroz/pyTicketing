@@ -1,61 +1,42 @@
 @startuml CU10_DesactivarUsuario
-title Desactivar Usuario
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state USUARIOS_ABIERTO_INICIAL as "USUARIOS_ABIERTO"
-state USUARIO_ABIERTO as "USUARIO_ABIERTO"
-state USUARIOS_ABIERTO_FINAL as "USUARIOS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> USUARIOS_ABIERTO_INICIAL
+state desactivarUsuario as "desactivarUsuario(usuario)" {
 
-USUARIOS_ABIERTO_INICIAL -[#green]-> USUARIO_ABIERTO : desactivarUsuario()
-note left on link
-    <b>Administrador solicita</b> desactivar
-    un usuario existente.
-    <b>Sistema presenta</b> la ficha del usuario
-    con la opción de confirmar la desactivación.
-end note
+    state " " as SolicitandoConfirmacion
+    state " " as DesactivandoUsuario
 
-state USUARIO_ABIERTO {
-    state VisualizacionUsuario as "Visualización de Usuario"
-    state ConfirmacionDesactivacion as "Confirmación de Desactivación"
-
-    [*] -[#green]-> VisualizacionUsuario
-    note right of VisualizacionUsuario
-        <b>Sistema muestra</b> los datos del usuario
-        y advierte que la desactivación
-        impedirá el acceso al sistema.
-        <b>Administrador puede solicitar</b> confirmar
-        mediante ejecutarDesactivacion().
+    [*] -[#green]-> SolicitandoConfirmacion
+    note on link
+    <b>Administrador</b> solicita desactivar a un usuario del listado
     end note
 
-    VisualizacionUsuario -[#green]-> ConfirmacionDesactivacion : ejecutarDesactivacion()
-    note right of ConfirmacionDesactivacion
-        <b>Sistema marca</b> el usuario como inactivo.
-        <b>Sistema cierra</b> cualquier sesión activa
-        del usuario desactivado.
+    SolicitandoConfirmacion -[#green]-> DesactivandoUsuario
+    note on link
+    <b>Sistema</b> presenta la ficha del usuario con advertencia
+    • Datos del usuario (solo lectura)
+    • Estado actual: Activo
+    • Mensaje de advertencia (impedirá el acceso al sistema)
+    • Permite solicitar confirmar desactivación
+    • Permite solicitar cancelar operación
     end note
 
-    ConfirmacionDesactivacion -[#green]-> [*]
+    DesactivandoUsuario -[#green]-> [*]
+    note on link
+    <b>Administrador</b> confirma la desactivación
+    <b>Sistema</b> marca el usuario como inactivo, cierra sus sesiones activas y guarda cambios
+    end note
 }
 
-USUARIO_ABIERTO -[#green]-> USUARIOS_ABIERTO_FINAL : confirmarDesactivacion()
-note left on link
-    <b>Sistema confirma</b> la desactivación
-    y regresa al listado de usuarios.
+desactivarUsuario -[#green]-> USUARIOS_ABIERTO
+note on link
+desactivación confirmada
 end note
 
-USUARIO_ABIERTO -[#red]-> USUARIOS_ABIERTO_FINAL : cancelarDesactivacion()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Administrador solicita</b> cancelar la operación.
-    <b>Sistema mantiene</b> el usuario activo
-    y regresa al listado de usuarios.
+desactivarUsuario -[#red]-> USUARIOS_ABIERTO
+note on link
+cancelar desactivación
 end note
-
-USUARIOS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml
