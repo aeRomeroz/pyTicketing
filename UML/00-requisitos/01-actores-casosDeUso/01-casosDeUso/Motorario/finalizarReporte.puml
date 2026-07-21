@@ -1,0 +1,52 @@
+@startuml CU31_FinalizarReporte
+
+skinparam linetype polyline
+
+state finalizarReporte as "finalizarReporte(reporte)" {
+
+    state " " as RequiringClosure
+    state " " as ProvidingConfirmation
+    state c <<choice>>
+
+    [*] -[#green]-> RequiringClosure
+    note on link
+    <b>Motorario</b> solicita finalizar turno de lectura
+    end note
+
+    RequiringClosure -[#green]-> ProvidingConfirmation
+    note on link
+    <b>Sistema</b> presenta
+    • total acumulado del turno (Niño / Adulto / Total)
+    • comparativa preliminar contra ventas de taquilla
+    • confirmación de cierre definitivo
+    end note
+
+    ProvidingConfirmation -[#green]-> c
+    note on link
+    <b>Motorario</b> solicita
+    • confirmar finalización
+    • cancelar finalización
+    end note
+
+    c -[#red]-> [*]
+    note on link
+    Motorario cancela
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    finalización exitosa
+    end note
+}
+
+finalizarReporte -[#green]-> MAQUINA_ABIERTA
+note on link
+consultarMaquina(maquina)
+end note
+
+finalizarReporte -[#red]-> REPORTE_ABIERTO
+note on link
+cancelar finalización
+end note
+
+@enduml

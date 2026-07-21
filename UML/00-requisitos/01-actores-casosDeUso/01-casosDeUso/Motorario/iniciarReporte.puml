@@ -1,0 +1,52 @@
+@startuml CU30_IniciarReporte
+
+skinparam linetype polyline
+
+state iniciarReporte as "iniciarReporte(maquina)" {
+
+    state " " as RequiringInitiation
+    state " " as ProvidingConfirmation
+    state c <<choice>>
+
+    [*] -[#green]-> RequiringInitiation
+    note on link
+    <b>Motorario</b> solicita iniciar turno de lectura
+    end note
+
+    RequiringInitiation -[#green]-> ProvidingConfirmation
+    note on link
+    <b>Sistema</b> presenta
+    • máquina asignada y operador
+    • contadores iniciales a cero
+    • advertencia si existe turno activo
+    end note
+
+    ProvidingConfirmation -[#green]-> c
+    note on link
+    <b>Motorario</b> solicita
+    • confirmar inicio
+    • cancelar inicio
+    end note
+
+    c -[#red]-> [*]
+    note on link
+    Motorario cancela
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    inicio exitoso
+    end note
+}
+
+iniciarReporte -[#green]-> REPORTE_ABIERTO
+note on link
+reportarTicketsRecibidos(maquina)
+end note
+
+iniciarReporte -[#red]-> MAQUINA_ABIERTA
+note on link
+cancelar inicio
+end note
+
+@enduml
