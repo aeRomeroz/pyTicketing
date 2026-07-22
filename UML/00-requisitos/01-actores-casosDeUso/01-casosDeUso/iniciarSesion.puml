@@ -1,0 +1,45 @@
+@startuml CU00_IniciarSesion
+
+skinparam linetype polyline
+
+state iniciarSesion as "iniciarSesion()" {
+
+    state " " as RequiringCredentials
+    state " " as ProvidingCredentials
+    state c <<choice>>
+
+    [*] -[#green]-> RequiringCredentials
+    note on link
+    <b>UsuarioNoAutenticado</b> solicita acceder al sistema
+    end note
+
+    RequiringCredentials -[#green]-> ProvidingCredentials
+    note on link
+    <b>Sistema</b> presenta formulario e ingresa credenciales
+    • nombre de usuario
+    • contraseña
+    end note
+
+    ProvidingCredentials -[#green]-> c
+    note on link
+    <b>UsuarioNoAutenticado</b> envía credenciales e ingresa datos
+    end note
+
+    c -[#red]-> RequiringCredentials
+    note on link
+    credenciales inválidas o usuario inactivo
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    credenciales válidas, sesión autenticada y permisos cargados
+    end note
+}
+
+iniciarSesion -[#green]-> SISTEMA_DISPONIBLE
+note on link
+UsuarioNoAutenticado → UsuarioAutenticado
+completarGestion()
+end note
+
+@enduml

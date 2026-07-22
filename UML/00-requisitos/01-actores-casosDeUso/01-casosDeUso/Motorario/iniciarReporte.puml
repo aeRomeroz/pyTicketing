@@ -35,7 +35,7 @@ state iniciarReporte as "iniciarReporte(maquina)" {
 
     c -[#green]-> [*]
     note on link
-    inicio exitoso
+    inicio exitoso, reporte activo creado
     end note
 }
 
@@ -44,7 +44,7 @@ note on link
 reportarTicketsRecibidos(maquina)
 end note
 
-iniciarReporte -[#blue]-> MAQUINA_ABIERTA
+iniciarReporte -[#blue]-> REPORTES_ABIERTO
 note on link
 cancelar inicio
 end note

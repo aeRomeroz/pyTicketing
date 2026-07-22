@@ -1,0 +1,48 @@
+@startuml CU00_CerrarSesion
+
+skinparam linetype polyline
+
+state cerrarSesion as "cerrarSesion()" {
+
+    state " " as RequiringConfirmation
+    state " " as ConfirmingClosure
+    state c <<choice>>
+
+    [*] -[#green]-> RequiringConfirmation
+    note on link
+    <b>UsuarioAutenticado</b> solicita cerrar sesión
+    end note
+
+    RequiringConfirmation -[#green]-> ConfirmingClosure
+    note on link
+    <b>Sistema</b> presenta diálogo de confirmación de cierre de sesión
+    end note
+
+    ConfirmingClosure -[#green]-> c
+    note on link
+    <b>UsuarioAutenticado</b> selecciona acción
+    end note
+
+    c -[#blue]-> [*]
+    note on link
+    cancelar cierre de sesión
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    confirmar cierre de sesión, token destruido y sesión finalizada
+    end note
+}
+
+cerrarSesion -[#blue]-> SISTEMA_DISPONIBLE
+note on link
+completarGestion()
+end note
+
+cerrarSesion -[#green]-> SESION_CERRADA
+note on link
+UsuarioAutenticado → UsuarioNoAutenticado
+iniciarSesion()
+end note
+
+@enduml

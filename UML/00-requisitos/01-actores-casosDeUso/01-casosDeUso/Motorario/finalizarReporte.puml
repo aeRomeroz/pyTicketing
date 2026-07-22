@@ -39,9 +39,9 @@ state finalizarReporte as "finalizarReporte(reporte)" {
     end note
 }
 
-finalizarReporte -[#green]-> MAQUINA_ABIERTA
+finalizarReporte -[#green]-> REPORTES_ABIERTO
 note on link
-consultarMaquina(maquina)
+completarGestion()
 end note
 
 finalizarReporte -[#blue]-> REPORTE_ABIERTO

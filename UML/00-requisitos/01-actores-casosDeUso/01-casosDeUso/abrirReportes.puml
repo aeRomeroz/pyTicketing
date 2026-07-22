@@ -1,0 +1,46 @@
+@startuml abrirReportes
+
+skinparam linetype polyline
+
+state abrirReportes as "abrirReportes()" {
+
+    state " " as MostrandoLista
+    state " " as FiltrandoLista
+
+    [*] -[#green]-> MostrandoLista
+    note on link
+    <b>Usuario</b> solicita abrir reportes de motorario
+    end note
+
+    MostrandoLista -[#green]-> FiltrandoLista
+    note on link
+    <b>Sistema</b> presenta lista de reportes de motorario
+    • Fecha, plaza, máquina y estado del reporte (iniciado/finalizado)
+    • Permite solicitar filtrar lista por fecha o plaza
+    • Permite solicitar iniciar nuevo reporte de motorario
+    • Permite seleccionar reporte activo para gestionar tickets o finalizar
+    end note
+
+    FiltrandoLista <-[#green]- FiltrandoLista
+    note on link
+    <b>Usuario</b> solicita filtrar lista
+    <b>Sistema</b> presenta lista filtrada
+    end note
+
+    FiltrandoLista -[#green]-> [*]
+    note on link
+    <b>Usuario</b> solicita una de las opciones
+    end note
+}
+
+abrirReportes -[#green]-> REPORTE_ABIERTO
+note on link
+iniciarReporte()
+end note
+
+abrirReportes -[#green]-> SISTEMA_DISPONIBLE
+note on link
+completarGestion()
+end note
+
+@enduml
