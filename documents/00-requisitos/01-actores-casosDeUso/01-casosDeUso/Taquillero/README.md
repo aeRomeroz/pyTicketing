@@ -10,9 +10,9 @@ Este documento detalla los flujos de los casos de uso para el actor **Taquillero
 
 ---
 
-## Anular Venta
-![Anular Venta](../../../../../images/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Taquillero/anularVenta.svg)
-[Ver código fuente (PlantUML)](../../../../../UML/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Taquillero/anularVenta.puml)
+## Solicitar Anulación de Venta
+![Solicitar Anulación de Venta](../../../../../images/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Taquillero/solicitarAnulacionVenta.svg)
+[Ver código fuente (PlantUML)](../../../../../UML/00-requisitos/01-actores-casosDeUso/01-casosDeUso/Taquillero/solicitarAnulacionVenta.puml)
 
 ---
 

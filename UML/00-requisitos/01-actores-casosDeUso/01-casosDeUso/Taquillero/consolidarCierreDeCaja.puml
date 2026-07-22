@@ -1,72 +1,55 @@
 @startuml CU03_ConsolidarCierreDeCaja
-title Consolidar Cierre de Caja
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state CIERRES_ABIERTO_INICIAL as "CIERRES_ABIERTO"
-state CIERRE_ABIERTO as "CIERRE_ABIERTO"
-state CIERRES_ABIERTO_FINAL as "CIERRES_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> CIERRES_ABIERTO_INICIAL
+state consolidarCierreDeCaja as "consolidarCierreDeCaja(cierre)" {
 
-CIERRES_ABIERTO_INICIAL -[#green]-> CIERRE_ABIERTO : abrirCierreDeCaja()
-note left on link
-    <b>Taquillero solicita</b> consolidar el cierre del día,
-    o <b>Sistema genera</b> automáticamente el cierre
-    al final de la jornada.
-    <b>Sistema presenta</b> el resumen del día.
-end note
+    state " " as RequiringConsolidation
+    state " " as ProvidingSummary
+    state " " as ValidatingData
+    state c <<choice>>
 
-state CIERRE_ABIERTO {
-    state VisualizacionCierre as "Visualización de Cierre"
-    state EdicionCierre as "Edición de Cierre"
-    state ConfirmacionCierre as "Confirmación de Cierre"
-
-    [*] -[#green]-> VisualizacionCierre
-    note right of VisualizacionCierre
-        <b>Sistema muestra</b> el resumen del día:
-        ventas registradas, reembolsos y
-        reportes de motorarios (solo lectura).
-        <b>Sistema permite solicitar</b> editar mediante
-        editarCierre() o confirmar directamente.
+    [*] -[#green]-> RequiringConsolidation
+    note on link
+    <b>Taquillero</b> solicita consolidar el cierre de caja del turno/día
     end note
 
-    VisualizacionCierre -[#green]-> EdicionCierre : editarCierre()
-    note right of EdicionCierre
-        <b>Taquillero puede modificar</b> datos de ventas
-        y añadir observaciones manuales.
-        <b>Los reportes de motorarios</b> son de solo lectura.
-        <b>Sistema valida</b> los datos introducidos.
+    RequiringConsolidation -[#green]-> ProvidingSummary
+    note on link
+    <b>Sistema</b> presenta resumen del día (ventas, reembolsos y reportes de motorarios de solo lectura)
+    • Permite modificar datos de ventas y añadir observaciones
+    • Permite solicitar confirmar consolidación
     end note
 
-    EdicionCierre -[#green]-> ConfirmacionCierre : guardarCambios()
-    VisualizacionCierre -[#green]-> ConfirmacionCierre : confirmarCierre()
-    note right of ConfirmacionCierre
-        <b>Sistema actualiza</b> el cierre con los cambios.
-        <b>Sistema marca</b> el cierre como pendiente
-        de revisión por el Supervisor.
+    ProvidingSummary -[#green]-> ValidatingData
+    note on link
+    <b>Taquillero</b> confirma los datos introducidos y solicita guardar consolidación
     end note
 
-    ConfirmacionCierre -[#green]-> [*]
+    ValidatingData -[#green]-> c
+    note on link
+    <b>Sistema</b> valida los datos y observaciones introducidas
+    end note
+
+    c -[#red]-> ProvidingSummary
+    note on link
+    datos inválidos o incompletos
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    datos válidos, cierre marcado como PENDIENTE_REVISION, notificado al Supervisor y guardado
+    end note
 }
 
-CIERRE_ABIERTO -[#green]-> CIERRES_ABIERTO_FINAL : confirmarCierre()
-note left on link
-    <b>Taquillero solicita</b> consolidar el cierre.
-    <b>Sistema registra</b> el cierre como consolidado
-    y notifica al Supervisor.
+consolidarCierreDeCaja -[#green]-> CAJA_ABIERTA
+note on link
+completarGestion()
 end note
 
-CIERRE_ABIERTO -[#red]-> CIERRES_ABIERTO_FINAL : cancelarCierre()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Taquillero solicita</b> salir sin consolidar.
-    <b>Sistema descarta</b> los cambios no guardados
-    y mantiene el cierre en estado pendiente.
+consolidarCierreDeCaja -[#blue]-> CAJA_ABIERTA
+note on link
+cancelar consolidación
 end note
-
-CIERRES_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

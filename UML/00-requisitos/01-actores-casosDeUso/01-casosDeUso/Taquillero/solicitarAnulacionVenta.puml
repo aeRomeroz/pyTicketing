@@ -1,8 +1,8 @@
-@startuml CU02_AnularVenta
+@startuml CU02_SolicitarAnulacionVenta
 
 skinparam linetype polyline
 
-state anularVenta as "anularVenta(venta)" {
+state solicitarAnulacionVenta as "solicitarAnulacionVenta(venta)" {
 
     state " " as RequiringReason
     state " " as ProvidingForm
@@ -11,18 +11,18 @@ state anularVenta as "anularVenta(venta)" {
 
     [*] -[#green]-> RequiringReason
     note on link
-    <b>Supervisor</b> solicita anular una venta registrada
+    <b>Taquillero</b> solicita anular una venta de su turno
     end note
 
     RequiringReason -[#green]-> ProvidingForm
     note on link
-    <b>Sistema</b> presenta detalle de la venta (máquina, tickets, total, método de pago)
-    • Solicita motivo de anulación (obligatorio)
+    <b>Sistema</b> presenta el detalle de la venta (tickets, total, método de pago)
+    • Solicita motivo de la anulación (obligatorio)
     end note
 
     ProvidingForm -[#green]-> ValidatingData
     note on link
-    <b>Supervisor</b> ingresa motivo y confirma la anulación
+    <b>Taquillero</b> ingresa el motivo y confirma la solicitud
     end note
 
     ValidatingData -[#green]-> c
@@ -37,18 +37,18 @@ state anularVenta as "anularVenta(venta)" {
 
     c -[#green]-> [*]
     note on link
-    motivo válido, venta marcada como ANULADA, reembolso generado en estado pendiente y guardado
+    motivo válido, venta marcada como PENDIENTE_ANULACION y notificado al Supervisor
     end note
 }
 
-anularVenta -[#green]-> VENTAS_ABIERTO
+solicitarAnulacionVenta -[#green]-> VENTAS_ABIERTO
 note on link
 completarGestion()
 end note
 
-anularVenta -[#blue]-> VENTAS_ABIERTO
+solicitarAnulacionVenta -[#blue]-> VENTAS_ABIERTO
 note on link
-cancelar anulación
+cancelar solicitud
 end note
 
 @enduml
