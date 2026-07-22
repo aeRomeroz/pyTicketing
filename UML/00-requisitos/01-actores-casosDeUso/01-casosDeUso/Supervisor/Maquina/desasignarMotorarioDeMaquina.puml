@@ -1,63 +1,40 @@
 @startuml CU24_DesasignarMotorarioDeMaquina
-title Desasignar Motorario de Máquina
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state MAQUINAS_ABIERTO_INICIAL as "MAQUINAS_ABIERTO"
-state ASIGNACION_ABIERTA as "ASIGNACION_ABIERTA"
-state MAQUINAS_ABIERTO_FINAL as "MAQUINAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> MAQUINAS_ABIERTO_INICIAL
+state desasignarMotorarioDeMaquina as "desasignarMotorarioDeMaquina(maquina)" {
 
-MAQUINAS_ABIERTO_INICIAL -[#green]-> ASIGNACION_ABIERTA : desasignarMotorarioDeMaquina()
-note left on link
-    <b>Supervisor solicita</b> desasignar un motorario
-    de su máquina actual.
-    <b>Sistema presenta</b> la ficha del motorario
-    con su máquina asignada actual.
-end note
+    state " " as SolicitandoConfirmacion
+    state " " as ProcesandoDesasignacion
 
-state ASIGNACION_ABIERTA {
-    state VisualizacionAsignacion as "Visualización de Asignación"
-    state ConfirmacionDesasignacion as "Confirmación de Desasignación"
-
-    [*] -[#green]-> VisualizacionAsignacion
-    note right of VisualizacionAsignacion
-        <b>Sistema muestra</b> el motorario y su
-        máquina asignada actual.
-        <b>Sistema advierte</b> que el motorario
-        quedará sin máquina asignada.
-        <b>Supervisor puede solicitar</b> confirmar
-        mediante ejecutarDesasignacion().
+    [*] -[#green]-> SolicitandoConfirmacion
+    note on link
+    <b>Supervisor</b> solicita desasignar motorario de su máquina actual
     end note
 
-    VisualizacionAsignacion -[#green]-> ConfirmacionDesasignacion : ejecutarDesasignacion()
-    note right of ConfirmacionDesasignacion
-        <b>Sistema desvincula</b> el motorario
-        de su máquina actual.
-        <b>Sistema marca</b> el motorario como
-        disponible para nueva asignación.
+    SolicitandoConfirmacion -[#green]-> ProcesandoDesasignacion
+    note on link
+    <b>Sistema</b> presenta la ficha del motorario con su máquina asignada actual
+    • Muestra advertencia de que el motorario quedará disponible sin máquina
+    • Permite solicitar confirmar desasignación
+    • Permite solicitar cancelar operación
     end note
 
-    ConfirmacionDesasignacion -[#green]-> [*]
+    ProcesandoDesasignacion -[#green]-> [*]
+    note on link
+    <b>Supervisor</b> confirma la desasignación
+    <b>Sistema</b> desvincula el motorario de la máquina, actualiza su estado a disponible y guarda cambios
+    end note
 }
 
-ASIGNACION_ABIERTA -[#green]-> MAQUINAS_ABIERTO_FINAL : confirmarDesasignacion()
-note left on link
-    <b>Sistema confirma</b> la desasignación realizada
-    y regresa al listado de máquinas.
+desasignarMotorarioDeMaquina -[#green]-> MAQUINAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-ASIGNACION_ABIERTA -[#red]-> MAQUINAS_ABIERTO_FINAL : cancelarDesasignacion()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> cancelar la operación.
-    <b>Sistema mantiene</b> el vínculo actual
-    y regresa al listado de máquinas.
+desasignarMotorarioDeMaquina -[#blue]-> MAQUINAS_ABIERTO
+note on link
+cancelar desasignación
 end note
-
-MAQUINAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

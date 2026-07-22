@@ -1,62 +1,40 @@
 @startuml CU14_DarDeBajaMaquina
-title Dar de Baja Máquina
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state MAQUINAS_ABIERTO_INICIAL as "MAQUINAS_ABIERTO"
-state MAQUINA_ABIERTA as "MAQUINA_ABIERTA"
-state MAQUINAS_ABIERTO_FINAL as "MAQUINAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> MAQUINAS_ABIERTO_INICIAL
+state darDeBajaMaquina as "darDeBajaMaquina(maquina)" {
 
-MAQUINAS_ABIERTO_INICIAL -[#green]-> MAQUINA_ABIERTA : darDeBajaMaquina()
-note left on link
-    <b>Supervisor solicita</b> dar de baja
-    una máquina existente.
-    <b>Sistema presenta</b> la ficha de la máquina
-    con la opción de confirmar la baja.
-end note
+    state " " as SolicitandoConfirmacion
+    state " " as ProcesandoBaja
 
-state MAQUINA_ABIERTA {
-    state VisualizacionMaquina as "Visualización de Máquina"
-    state ConfirmacionBaja as "Confirmación de Baja"
-
-    [*] -[#green]-> VisualizacionMaquina
-    note right of VisualizacionMaquina
-        <b>Sistema muestra</b> los datos de la máquina
-        y advierte que darla de baja suspenderá
-        temporalmente el vínculo con su plaza
-        y motorario asignados.
-        <b>Supervisor puede solicitar</b> confirmar
-        mediante ejecutarBaja().
+    [*] -[#green]-> SolicitandoConfirmacion
+    note on link
+    <b>Supervisor</b> solicita dar de baja una máquina existente
     end note
 
-    VisualizacionMaquina -[#green]-> ConfirmacionBaja : ejecutarBaja()
-    note right of ConfirmacionBaja
-        <b>Sistema marca</b> la máquina como inactiva.
-        <b>Sistema suspende</b> temporalmente el vínculo
-        con su plaza y motorario asignados.
+    SolicitandoConfirmacion -[#green]-> ProcesandoBaja
+    note on link
+    <b>Sistema</b> presenta la ficha de la máquina y advierte que la baja
+    suspenderá el vínculo con su plaza y motorario asignados
+    • Permite solicitar confirmar baja
+    • Permite solicitar cancelar operación
     end note
 
-    ConfirmacionBaja -[#green]-> [*]
+    ProcesandoBaja -[#green]-> [*]
+    note on link
+    <b>Supervisor</b> confirma la baja
+    <b>Sistema</b> marca la máquina como inactiva, suspende los vínculos asignados y guarda cambios
+    end note
 }
 
-MAQUINA_ABIERTA -[#green]-> MAQUINAS_ABIERTO_FINAL : confirmarBaja()
-note left on link
-    <b>Sistema confirma</b> la baja de la máquina
-    y regresa al listado de máquinas.
+darDeBajaMaquina -[#green]-> MAQUINAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-MAQUINA_ABIERTA -[#red]-> MAQUINAS_ABIERTO_FINAL : cancelarBaja()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> cancelar la operación.
-    <b>Sistema mantiene</b> la máquina activa
-    y regresa al listado de máquinas.
+darDeBajaMaquina -[#blue]-> MAQUINAS_ABIERTO
+note on link
+cancelar baja
 end note
-
-MAQUINAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

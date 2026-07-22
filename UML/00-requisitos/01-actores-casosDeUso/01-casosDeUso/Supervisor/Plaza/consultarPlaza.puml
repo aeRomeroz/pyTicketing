@@ -1,46 +1,47 @@
 @startuml CU18_ConsultarPlaza
-title Consultar Plaza
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
-state PLAZA_ABIERTA as "PLAZA_ABIERTA"
-state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+state consultarPlaza as "consultarPlaza(plaza)" {
 
-PLAZAS_ABIERTO_INICIAL -[#green]-> PLAZA_ABIERTA : consultarPlaza()
-note left on link
-    <b>Supervisor solicita</b> consultar el detalle
-    de una plaza existente.
-    <b>Sistema presenta</b> la ficha completa
-    de la plaza.
-end note
+    state " " as RequiringConsultation
+    state " " as ProvidingDetails
+    state c <<choice>>
 
-state PLAZA_ABIERTA {
-    state VisualizacionPlaza as "Visualización de Plaza"
-
-    [*] -[#green]-> VisualizacionPlaza
-    note right of VisualizacionPlaza
-        <b>Sistema muestra</b> los datos de la plaza:
-        nombre, ciudad, estado y máquinas
-        y taquilleros asignados.
-        <b>Sistema permite solicitar</b> editar
-        mediante editarPlaza().
+    [*] -[#green]-> RequiringConsultation
+    note on link
+    <b>Supervisor</b> solicita consultar plaza
     end note
 
-    VisualizacionPlaza -[#green]-> [*]
+    RequiringConsultation -[#green]-> ProvidingDetails
+    note on link
+    <b>Sistema</b> presenta
+    • ficha detallada de la plaza (nombre, ciudad, estado, máquinas y taquilleros asignados)
+    • opción para editar o volver al listado
+    • mensaje si la plaza no existe
+    end note
+
+    ProvidingDetails -[#green]-> c
+    note on link
+    <b>Supervisor</b> solicita
+    • continuar consultando
+    • salir de consulta
+    end note
+
+    c -[#green]-> ProvidingDetails
+    note on link
+    continuar navegando
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    salir de consulta
+    end note
 }
 
-PLAZA_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cerrarPlaza()
-note right on link
-    <b>CERRAR:</b>
-    <b>Supervisor solicita</b> salir de la ficha.
-    <b>Sistema presenta</b> el listado de plazas.
+consultarPlaza -[#green]-> PLAZAS_ABIERTO
+note on link
+completarGestion()
 end note
-
-PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

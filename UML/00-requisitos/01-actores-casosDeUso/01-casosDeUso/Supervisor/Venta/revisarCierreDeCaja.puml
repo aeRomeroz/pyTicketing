@@ -1,77 +1,62 @@
 @startuml CU04_RevisarCierreDeCaja
-title Revisar Cierre de Caja
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state CIERRES_ABIERTO_INICIAL as "CIERRES_ABIERTO"
-state CIERRE_ABIERTO as "CIERRE_ABIERTO"
-state CIERRES_ABIERTO_FINAL as "CIERRES_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> CIERRES_ABIERTO_INICIAL
+state revisarCierreDeCaja as "revisarCierreDeCaja(cierre)" {
 
-CIERRES_ABIERTO_INICIAL -[#green]-> CIERRE_ABIERTO : revisarCierreDeCaja()
-note left on link
-    <b>Supervisor solicita</b> revisar el cierre consolidado.
-    <b>Sistema presenta</b> el resumen del día:
-    ventas, reembolsos y reportes de motorarios.
-end note
+    state " " as RequiringAction
+    state " " as ProvidingDetails
+    state " " as ValidatingReturn
+    state c <<choice>>
 
-state CIERRE_ABIERTO {
-    state VisualizacionCierre as "Visualización de Cierre"
-    state EdicionCierre as "Edición de Cierre"
-    state DevolucionCierre as "Devolución al Taquillero"
-    state AprobacionCierre as "Aprobación de Cierre"
-
-    [*] -[#green]-> VisualizacionCierre
-    note right of VisualizacionCierre
-        <b>Sistema muestra</b> el resumen completo del día.
-        <b>Supervisor puede solicitar</b> aprobar, editar
-        o devolver al taquillero.
+    [*] -[#green]-> RequiringAction
+    note on link
+    <b>Supervisor</b> solicita revisar un cierre de caja consolidado
     end note
 
-    VisualizacionCierre -[#green]-> AprobacionCierre : aprobarCierre()
-    note right of AprobacionCierre
-        <b>Sistema registra</b> el cierre como aprobado.
-        <b>Sistema cierra</b> el ciclo del día.
+    RequiringAction -[#green]-> ProvidingDetails
+    note on link
+    <b>Sistema</b> presenta resumen del día (ventas, reembolsos y reportes)
+    • Permite solicitar aprobar cierre directamente
+    • Permite solicitar editar cierre (corregir datos y observaciones)
+    • Permite solicitar devolver al taquillero (requiere motivo)
     end note
 
-    VisualizacionCierre -[#green]-> EdicionCierre : editarCierre()
-    note right of EdicionCierre
-        <b>Supervisor corrige</b> directamente los datos
-        del cierre y añade observaciones.
-        <b>Sistema valida</b> los datos introducidos.
+    ProvidingDetails -[#green]-> [*]
+    note on link
+    <b>Supervisor</b> aprueba o guarda ediciones y aprueba el cierre
+    <b>Sistema</b> marca el cierre como APROBADO, cierra el ciclo del día y guarda cambios
     end note
 
-    EdicionCierre -[#green]-> AprobacionCierre : guardarCambios()
-
-    VisualizacionCierre -[#red]-> DevolucionCierre : devolverAlTaquillero()
-    note right of DevolucionCierre
-        <b>Supervisor introduce</b> el motivo del rechazo
-        (obligatorio).
-        <b>Sistema marca</b> el cierre como rechazado
-        y notifica al Taquillero para corregir.
+    ProvidingDetails -[#red]-> ValidatingReturn
+    note on link
+    <b>Supervisor</b> solicita devolver al taquillero e ingresa motivo
     end note
 
-    DevolucionCierre -[#red]-> [*]
-    AprobacionCierre -[#green]-> [*]
+    ValidatingReturn -[#red]-> c
+    note on link
+    <b>Sistema</b> valida que el motivo de devolución no esté vacío
+    end note
+
+    c -[#red]-> ProvidingDetails
+    note on link
+    motivo de devolución inválido o vacío
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    motivo válido, cierre marcado como DEVUELTO/RECHAZADO, notificado al Taquillero y guardado
+    end note
 }
 
-CIERRE_ABIERTO -[#green]-> CIERRES_ABIERTO_FINAL : confirmarCierre()
-note left on link
-    <b>Sistema confirma</b> el cierre aprobado
-    o devuelto al taquillero.
+revisarCierreDeCaja -[#green]-> CAJA_ABIERTA
+note on link
+completarGestion()
 end note
 
-CIERRE_ABIERTO -[#red]-> CIERRES_ABIERTO_FINAL : cancelarRevision()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> salir sin revisar.
-    <b>Sistema mantiene</b> el cierre en estado
-    pendiente de revisión.
+revisarCierreDeCaja -[#blue]-> CAJA_ABIERTA
+note on link
+cancelar revisión
 end note
-
-CIERRES_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

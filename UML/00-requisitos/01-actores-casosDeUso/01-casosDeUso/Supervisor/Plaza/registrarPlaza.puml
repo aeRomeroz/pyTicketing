@@ -1,56 +1,54 @@
 @startuml CU11_RegistrarPlaza
-title Registrar Plaza
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
-state PLAZA_ABIERTA as "PLAZA_ABIERTA"
-state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+state registrarPlaza as "registrarPlaza()" {
 
-PLAZAS_ABIERTO_INICIAL -[#green]-> PLAZA_ABIERTA : registrarPlaza()
-note left on link
-    <b>Supervisor solicita</b> registrar una nueva plaza.
-    <b>Sistema presenta</b> el formulario de creación.
-end note
+    state " " as RequiringData
+    state " " as ProvidingForm
+    state " " as ValidatingData
+    state c <<choice>>
 
-state PLAZA_ABIERTA {
-    state FormularioPlaza as "Formulario de Plaza"
-    state ConfirmacionPlaza as "Confirmación de Plaza"
-
-    [*] -[#green]-> FormularioPlaza
-    note right of FormularioPlaza
-        <b>Supervisor introduce</b> los datos
-        de la plaza (nombre, ciudad, estado).
-        <b>Sistema valida</b> los datos introducidos.
+    [*] -[#green]-> RequiringData
+    note on link
+    <b>Supervisor</b> solicita registrar una nueva plaza
     end note
 
-    FormularioPlaza -[#green]-> ConfirmacionPlaza : guardarPlaza()
-    note right of ConfirmacionPlaza
-        <b>Sistema registra</b> la nueva plaza
-        como activa en el sistema.
+    RequiringData -[#green]-> ProvidingForm
+    note on link
+    <b>Sistema</b> presenta el formulario de registro de plaza
+    • Nombre, ciudad, estado
     end note
 
-    ConfirmacionPlaza -[#green]-> [*]
+    ProvidingForm -[#green]-> ValidatingData
+    note on link
+    <b>Supervisor</b> ingresa los datos y solicita guardar
+    end note
+
+    ValidatingData -[#green]-> c
+    note on link
+    <b>Sistema</b> valida los datos ingresados
+    end note
+
+    c -[#red]-> ProvidingForm
+    note on link
+    datos inválidos o faltantes
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    datos válidos, plaza registrada como activa y guardada
+    end note
 }
 
-PLAZA_ABIERTA -[#green]-> PLAZAS_ABIERTO_FINAL : confirmarRegistro()
-note left on link
-    <b>Sistema confirma</b> la plaza registrada
-    y regresa al listado de plazas.
+registrarPlaza -[#green]-> PLAZAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-PLAZA_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cancelarRegistro()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> cancelar la operación.
-    <b>Sistema descarta</b> los datos introducidos
-    y regresa al listado de plazas.
+registrarPlaza -[#blue]-> PLAZAS_ABIERTO
+note on link
+cancelar registro
 end note
-
-PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

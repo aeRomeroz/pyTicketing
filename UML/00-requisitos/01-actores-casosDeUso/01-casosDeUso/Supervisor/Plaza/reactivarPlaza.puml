@@ -1,62 +1,40 @@
 @startuml CU25_ReactivarPlaza
-title Reactivar Plaza
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
-state PLAZA_ABIERTA as "PLAZA_ABIERTA"
-state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+state reactivarPlaza as "reactivarPlaza(plaza)" {
 
-PLAZAS_ABIERTO_INICIAL -[#green]-> PLAZA_ABIERTA : reactivarPlaza()
-note left on link
-    <b>Supervisor solicita</b> reactivar una plaza
-    dada de baja.
-    <b>Sistema presenta</b> la ficha de la plaza
-    con la opción de confirmar la reactivación.
-end note
+    state " " as SolicitandoConfirmacion
+    state " " as ProcesandoReactivacion
 
-state PLAZA_ABIERTA {
-    state VisualizacionPlaza as "Visualización de Plaza"
-    state ConfirmacionReactivacion as "Confirmación de Reactivación"
-
-    [*] -[#green]-> VisualizacionPlaza
-    note right of VisualizacionPlaza
-        <b>Sistema muestra</b> los datos de la plaza
-        y advierte que la reactivación restaurará
-        los vínculos suspendidos con sus
-        máquinas y taquilleros asignados.
-        <b>Supervisor puede solicitar</b> confirmar
-        mediante ejecutarReactivacion().
+    [*] -[#green]-> SolicitandoConfirmacion
+    note on link
+    <b>Supervisor</b> solicita reactivar una plaza dada de baja
     end note
 
-    VisualizacionPlaza -[#green]-> ConfirmacionReactivacion : ejecutarReactivacion()
-    note right of ConfirmacionReactivacion
-        <b>Sistema marca</b> la plaza como activa.
-        <b>Sistema restaura</b> los vínculos suspendidos
-        con sus máquinas y taquilleros asignados.
+    SolicitandoConfirmacion -[#green]-> ProcesandoReactivacion
+    note on link
+    <b>Sistema</b> presenta la ficha de la plaza y advierte que la reactivación
+    restaurará los vínculos suspendidos con sus máquinas y taquilleros
+    • Permite solicitar confirmar reactivación
+    • Permite solicitar cancelar operación
     end note
 
-    ConfirmacionReactivacion -[#green]-> [*]
+    ProcesandoReactivacion -[#green]-> [*]
+    note on link
+    <b>Supervisor</b> confirma la reactivación
+    <b>Sistema</b> marca la plaza como activa, restaura los vínculos suspendidos y guarda cambios
+    end note
 }
 
-PLAZA_ABIERTA -[#green]-> PLAZAS_ABIERTO_FINAL : confirmarReactivacion()
-note left on link
-    <b>Sistema confirma</b> la reactivación de la plaza
-    y regresa al listado de plazas.
+reactivarPlaza -[#green]-> PLAZAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-PLAZA_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cancelarReactivacion()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> cancelar la operación.
-    <b>Sistema mantiene</b> la plaza inactiva
-    y regresa al listado de plazas.
+reactivarPlaza -[#blue]-> PLAZAS_ABIERTO
+note on link
+cancelar reactivación
 end note
-
-PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

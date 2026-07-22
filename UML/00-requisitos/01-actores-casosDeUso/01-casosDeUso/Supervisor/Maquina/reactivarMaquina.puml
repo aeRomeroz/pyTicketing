@@ -1,62 +1,40 @@
 @startuml CU26_ReactivarMaquina
-title Reactivar Máquina
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state MAQUINAS_ABIERTO_INICIAL as "MAQUINAS_ABIERTO"
-state MAQUINA_ABIERTA as "MAQUINA_ABIERTA"
-state MAQUINAS_ABIERTO_FINAL as "MAQUINAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> MAQUINAS_ABIERTO_INICIAL
+state reactivarMaquina as "reactivarMaquina(maquina)" {
 
-MAQUINAS_ABIERTO_INICIAL -[#green]-> MAQUINA_ABIERTA : reactivarMaquina()
-note left on link
-    <b>Supervisor solicita</b> reactivar una máquina
-    dada de baja.
-    <b>Sistema presenta</b> la ficha de la máquina
-    con la opción de confirmar la reactivación.
-end note
+    state " " as SolicitandoConfirmacion
+    state " " as ProcesandoReactivacion
 
-state MAQUINA_ABIERTA {
-    state VisualizacionMaquina as "Visualización de Máquina"
-    state ConfirmacionReactivacion as "Confirmación de Reactivación"
-
-    [*] -[#green]-> VisualizacionMaquina
-    note right of VisualizacionMaquina
-        <b>Sistema muestra</b> los datos de la máquina
-        y advierte que la reactivación restaurará
-        los vínculos suspendidos con su
-        plaza y motorario asignados.
-        <b>Supervisor puede solicitar</b> confirmar
-        mediante ejecutarReactivacion().
+    [*] -[#green]-> SolicitandoConfirmacion
+    note on link
+    <b>Supervisor</b> solicita reactivar una máquina dada de baja
     end note
 
-    VisualizacionMaquina -[#green]-> ConfirmacionReactivacion : ejecutarReactivacion()
-    note right of ConfirmacionReactivacion
-        <b>Sistema marca</b> la máquina como activa.
-        <b>Sistema restaura</b> los vínculos suspendidos
-        con su plaza y motorario asignados.
+    SolicitandoConfirmacion -[#green]-> ProcesandoReactivacion
+    note on link
+    <b>Sistema</b> presenta la ficha de la máquina y advierte que la reactivación
+    restaurará los vínculos suspendidos con su plaza y motorario
+    • Permite solicitar confirmar reactivación
+    • Permite solicitar cancelar operación
     end note
 
-    ConfirmacionReactivacion -[#green]-> [*]
+    ProcesandoReactivacion -[#green]-> [*]
+    note on link
+    <b>Supervisor</b> confirma la reactivación
+    <b>Sistema</b> marca la máquina como activa, restaura los vínculos suspendidos y guarda cambios
+    end note
 }
 
-MAQUINA_ABIERTA -[#green]-> MAQUINAS_ABIERTO_FINAL : confirmarReactivacion()
-note left on link
-    <b>Sistema confirma</b> la reactivación de la máquina
-    y regresa al listado de máquinas.
+reactivarMaquina -[#green]-> MAQUINAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-MAQUINA_ABIERTA -[#red]-> MAQUINAS_ABIERTO_FINAL : cancelarReactivacion()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> cancelar la operación.
-    <b>Sistema mantiene</b> la máquina inactiva
-    y regresa al listado de máquinas.
+reactivarMaquina -[#blue]-> MAQUINAS_ABIERTO
+note on link
+cancelar reactivación
 end note
-
-MAQUINAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

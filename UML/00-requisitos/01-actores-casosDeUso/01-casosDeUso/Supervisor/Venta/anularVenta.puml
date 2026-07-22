@@ -1,66 +1,54 @@
 @startuml CU02_AnularVenta
-title Anular Venta
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state VENTAS_ABIERTO_INICIAL as "VENTAS_ABIERTO"
-state VENTA_ABIERTA as "VENTA_ABIERTA"
-state VENTAS_ABIERTO_FINAL as "VENTAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> VENTAS_ABIERTO_INICIAL
+state anularVenta as "anularVenta(venta)" {
 
-VENTAS_ABIERTO_INICIAL -[#green]-> VENTA_ABIERTA : anularVenta()
-note left on link
-    <b>Taquillero/Supervisor solicita</b> anular una venta registrada.
-    <b>Sistema presenta</b> el detalle de la venta seleccionada.
-end note
+    state " " as RequiringReason
+    state " " as ProvidingForm
+    state " " as ValidatingData
+    state c <<choice>>
 
-state VENTA_ABIERTA {
-    state VisualizacionVenta as "Visualización de Venta"
-    state MotivoCancelacion as "Motivo de Anulación"
-    state PendienteReembolso as "Reembolso Pendiente"
-
-    [*] -[#green]-> VisualizacionVenta
-    note right of VisualizacionVenta
-        <b>Sistema muestra</b> los datos de la venta
-        (máquina, tickets, total, método de pago).
-        <b>Sistema permite solicitar</b> anular mediante
-        introducirMotivo().
+    [*] -[#green]-> RequiringReason
+    note on link
+    <b>Taquillero/Supervisor</b> solicita anular una venta registrada
     end note
 
-    VisualizacionVenta -[#green]-> MotivoCancelacion : introducirMotivo()
-    note right of MotivoCancelacion
-        <b>Taquillero/Supervisor introduce</b> el motivo
-        de la anulación (obligatorio).
-        <b>Sistema valida</b> que el motivo no esté vacío.
+    RequiringReason -[#green]-> ProvidingForm
+    note on link
+    <b>Sistema</b> presenta detalle de la venta (máquina, tickets, total, método de pago)
+    • Solicita motivo de anulación (obligatorio)
     end note
 
-    MotivoCancelacion -[#green]-> PendienteReembolso
-    note right of PendienteReembolso
-        <b>Sistema registra</b> la anulación de la venta.
-        <b>Sistema genera</b> un Reembolso en estado
-        pendiente de autorización por el Supervisor.
+    ProvidingForm -[#green]-> ValidatingData
+    note on link
+    <b>Usuario</b> ingresa motivo y solicita confirmar anulación
     end note
 
-    PendienteReembolso -[#green]-> [*]
+    ValidatingData -[#green]-> c
+    note on link
+    <b>Sistema</b> valida que el motivo no esté vacío
+    end note
+
+    c -[#red]-> ProvidingForm
+    note on link
+    motivo inválido o vacío
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    motivo válido, venta anulada, reembolso generado en estado pendiente y guardado
+    end note
 }
 
-VENTA_ABIERTA -[#green]-> VENTAS_ABIERTO_FINAL : confirmarAnulacion()
-note left on link
-    <b>Sistema confirma</b> la anulación registrada
-    y regresa al listado de ventas.
+anularVenta -[#green]-> VENTAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-VENTA_ABIERTA -[#red]-> VENTAS_ABIERTO_FINAL : cancelarAnulacion()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Taquillero/Supervisor solicita</b> cancelar la operación.
-    <b>Sistema descarta</b> los datos introducidos
-    y regresa al listado de ventas.
+anularVenta -[#blue]-> VENTAS_ABIERTO
+note on link
+cancelar anulación
 end note
-
-VENTAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

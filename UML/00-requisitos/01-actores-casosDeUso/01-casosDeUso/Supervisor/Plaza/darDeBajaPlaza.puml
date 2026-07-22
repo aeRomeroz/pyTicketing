@@ -1,62 +1,40 @@
 @startuml CU12_DarDeBajaPlaza
-title Dar de Baja Plaza
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
-state PLAZA_ABIERTA as "PLAZA_ABIERTA"
-state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+state darDeBajaPlaza as "darDeBajaPlaza(plaza)" {
 
-PLAZAS_ABIERTO_INICIAL -[#green]-> PLAZA_ABIERTA : darDeBajaPlaza()
-note left on link
-    <b>Supervisor solicita</b> dar de baja
-    una plaza existente.
-    <b>Sistema presenta</b> la ficha de la plaza
-    con la opción de confirmar la baja.
-end note
+    state " " as SolicitandoConfirmacion
+    state " " as ProcesandoBaja
 
-state PLAZA_ABIERTA {
-    state VisualizacionPlaza as "Visualización de Plaza"
-    state ConfirmacionBaja as "Confirmación de Baja"
-
-    [*] -[#green]-> VisualizacionPlaza
-    note right of VisualizacionPlaza
-        <b>Sistema muestra</b> los datos de la plaza
-        y advierte que darla de baja suspenderá
-        temporalmente los vínculos con sus
-        máquinas y taquilleros asignados.
-        <b>Supervisor puede solicitar</b> confirmar
-        mediante ejecutarBaja().
+    [*] -[#green]-> SolicitandoConfirmacion
+    note on link
+    <b>Supervisor</b> solicita dar de baja una plaza existente
     end note
 
-    VisualizacionPlaza -[#green]-> ConfirmacionBaja : ejecutarBaja()
-    note right of ConfirmacionBaja
-        <b>Sistema marca</b> la plaza como inactiva.
-        <b>Sistema suspende</b> temporalmente los vínculos
-        con las máquinas y taquilleros asignados.
+    SolicitandoConfirmacion -[#green]-> ProcesandoBaja
+    note on link
+    <b>Sistema</b> presenta la ficha de la plaza y advierte que la baja
+    suspenderá los vínculos con sus máquinas y taquilleros asignados
+    • Permite solicitar confirmar baja
+    • Permite solicitar cancelar operación
     end note
 
-    ConfirmacionBaja -[#green]-> [*]
+    ProcesandoBaja -[#green]-> [*]
+    note on link
+    <b>Supervisor</b> confirma la baja
+    <b>Sistema</b> marca la plaza como inactiva, suspende los vínculos asignados y guarda cambios
+    end note
 }
 
-PLAZA_ABIERTA -[#green]-> PLAZAS_ABIERTO_FINAL : confirmarBaja()
-note left on link
-    <b>Sistema confirma</b> la baja de la plaza
-    y regresa al listado de plazas.
+darDeBajaPlaza -[#green]-> PLAZAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-PLAZA_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cancelarBaja()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> cancelar la operación.
-    <b>Sistema mantiene</b> la plaza activa
-    y regresa al listado de plazas.
+darDeBajaPlaza -[#blue]-> PLAZAS_ABIERTO
+note on link
+cancelar baja
 end note
-
-PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

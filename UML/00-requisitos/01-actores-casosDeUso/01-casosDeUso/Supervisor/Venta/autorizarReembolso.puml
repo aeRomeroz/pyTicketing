@@ -1,76 +1,61 @@
 @startuml CU06_AutorizarReembolso
-title Autorizar Reembolso
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state REEMBOLSOS_ABIERTO_INICIAL as "REEMBOLSOS_ABIERTO"
-state REEMBOLSO_ABIERTO as "REEMBOLSO_ABIERTO"
-state REEMBOLSOS_ABIERTO_FINAL as "REEMBOLSOS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> REEMBOLSOS_ABIERTO_INICIAL
+state autorizarReembolso as "autorizarReembolso(reembolso)" {
 
-REEMBOLSOS_ABIERTO_INICIAL -[#green]-> REEMBOLSO_ABIERTO : revisarReembolso()
-note left on link
-    <b>Supervisor solicita</b> revisar una solicitud
-    de reembolso pendiente.
-    <b>Sistema presenta</b> el detalle del reembolso
-    (venta original, monto, motivo de anulación).
-end note
+    state " " as RequiringAction
+    state " " as ProvidingDetails
+    state " " as ValidatingRejection
+    state c <<choice>>
 
-state REEMBOLSO_ABIERTO {
-    state VisualizacionReembolso as "Visualización de Reembolso"
-    state MotivoRechazo as "Motivo de Rechazo"
-    state ResolucionReembolso as "Resolución de Reembolso"
-
-    [*] -[#green]-> VisualizacionReembolso
-    note right of VisualizacionReembolso
-        <b>Sistema muestra</b> los datos de la venta
-        original, el monto fijo y el motivo
-        de anulación introducido por el Taquillero.
-        <b>Supervisor puede solicitar</b> aprobar
-        o rechazar el reembolso.
+    [*] -[#green]-> RequiringAction
+    note on link
+    <b>Supervisor</b> solicita revisar un reembolso pendiente
     end note
 
-    VisualizacionReembolso -[#green]-> ResolucionReembolso : aprobarReembolso()
-    note right of ResolucionReembolso
-        <b>Sistema registra</b> el reembolso como aprobado.
-        <b>Sistema notifica</b> al Taquillero
-        para ejecutar la devolución al cliente.
+    RequiringAction -[#green]-> ProvidingDetails
+    note on link
+    <b>Sistema</b> presenta detalle del reembolso (venta original, monto, motivo de anulación)
+    • Permite solicitar aprobar reembolso
+    • Permite solicitar rechazar reembolso (requiere motivo)
     end note
 
-    VisualizacionReembolso -[#red]-> MotivoRechazo : rechazarReembolso()
-    note right of MotivoRechazo
-        <b>Supervisor introduce</b> el motivo
-        del rechazo (obligatorio).
-        <b>Sistema valida</b> que el motivo no esté vacío.
+    ProvidingDetails -[#green]-> [*]
+    note on link
+    <b>Supervisor</b> aprueba el reembolso
+    <b>Sistema</b> marca el reembolso como aprobado, notifica al Taquillero para la devolución y guarda cambios
     end note
 
-    MotivoRechazo -[#red]-> ResolucionReembolso : confirmarRechazo()
-    note right of ResolucionReembolso
-        <b>Sistema registra</b> el reembolso como rechazado.
-        <b>Sistema notifica</b> al Taquillero
-        con el motivo del rechazo.
+    ProvidingDetails -[#red]-> ValidatingRejection
+    note on link
+    <b>Supervisor</b> rechaza el reembolso e ingresa motivo
     end note
 
-    ResolucionReembolso -[#green]-> [*]
+    ValidatingRejection -[#red]-> c
+    note on link
+    <b>Sistema</b> valida que el motivo de rechazo no esté vacío
+    end note
+
+    c -[#red]-> ProvidingDetails
+    note on link
+    motivo de rechazo inválido o vacío
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    motivo válido, reembolso marcado como rechazado, notificado al Taquillero y guardado
+    end note
 }
 
-REEMBOLSO_ABIERTO -[#green]-> REEMBOLSOS_ABIERTO_FINAL : confirmarResolucion()
-note left on link
-    <b>Sistema confirma</b> la resolución del reembolso
-    y regresa al listado de reembolsos pendientes.
+autorizarReembolso -[#green]-> VENTAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-REEMBOLSO_ABIERTO -[#red]-> REEMBOLSOS_ABIERTO_FINAL : cancelarRevision()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> salir sin resolver.
-    <b>Sistema mantiene</b> el reembolso en estado
-    pendiente de autorización.
+autorizarReembolso -[#blue]-> VENTAS_ABIERTO
+note on link
+cancelar revisión
 end note
-
-REEMBOLSOS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

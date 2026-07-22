@@ -1,57 +1,54 @@
 @startuml CU19_EditarPlaza
-title Editar Plaza
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state PLAZAS_ABIERTO_INICIAL as "PLAZAS_ABIERTO"
-state PLAZA_ABIERTA as "PLAZA_ABIERTA"
-state PLAZAS_ABIERTO_FINAL as "PLAZAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> PLAZAS_ABIERTO_INICIAL
+state editarPlaza as "editarPlaza(plaza)" {
 
-PLAZAS_ABIERTO_INICIAL -[#green]-> PLAZA_ABIERTA : editarPlaza()
-note left on link
-    <b>Supervisor solicita</b> editar los datos
-    de una plaza existente.
-    <b>Sistema presenta</b> el formulario de edición
-    con los datos actuales precargados.
-end note
+    state " " as RequiringData
+    state " " as ProvidingForm
+    state " " as ValidatingData
+    state c <<choice>>
 
-state PLAZA_ABIERTA {
-    state EdicionPlaza as "Edición de Plaza"
-    state ConfirmacionPlaza as "Confirmación de Plaza"
-
-    [*] -[#green]-> EdicionPlaza
-    note right of EdicionPlaza
-        <b>Supervisor modifica</b> los datos
-        de la plaza (nombre, ciudad, estado).
-        <b>Sistema valida</b> los datos introducidos.
+    [*] -[#green]-> RequiringData
+    note on link
+    <b>Supervisor</b> solicita editar una plaza existente
     end note
 
-    EdicionPlaza -[#green]-> ConfirmacionPlaza : guardarPlaza()
-    note right of ConfirmacionPlaza
-        <b>Sistema registra</b> los cambios de la plaza.
+    RequiringData -[#green]-> ProvidingForm
+    note on link
+    <b>Sistema</b> presenta formulario con datos precargados
+    • Nombre, ciudad, estado
     end note
 
-    ConfirmacionPlaza -[#green]-> [*]
+    ProvidingForm -[#green]-> ValidatingData
+    note on link
+    <b>Supervisor</b> modifica los datos y solicita guardar
+    end note
+
+    ValidatingData -[#green]-> c
+    note on link
+    <b>Sistema</b> valida los datos ingresados
+    end note
+
+    c -[#red]-> ProvidingForm
+    note on link
+    datos inválidos
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    datos válidos y guardados
+    end note
 }
 
-PLAZA_ABIERTA -[#green]-> PLAZAS_ABIERTO_FINAL : confirmarEdicion()
-note left on link
-    <b>Sistema confirma</b> los cambios guardados
-    y regresa al listado de plazas.
+editarPlaza -[#green]-> PLAZAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-PLAZA_ABIERTA -[#red]-> PLAZAS_ABIERTO_FINAL : cancelarEdicion()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> salir sin guardar.
-    <b>Sistema descarta</b> los cambios introducidos
-    y regresa al listado de plazas.
+editarPlaza -[#blue]-> PLAZAS_ABIERTO
+note on link
+cancelar edición
 end note
-
-PLAZAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

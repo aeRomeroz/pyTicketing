@@ -1,68 +1,55 @@
 @startuml CU13_RegistrarMaquina
-title Registrar Máquina
-skinparam nodesep 100
-skinparam ranksep 100
-skinparam linetype ortho
-skinparam Padding 10
 
-state MAQUINAS_ABIERTO_INICIAL as "MAQUINAS_ABIERTO"
-state MAQUINA_ABIERTA as "MAQUINA_ABIERTA"
-state MAQUINAS_ABIERTO_FINAL as "MAQUINAS_ABIERTO"
+skinparam linetype polyline
 
-[*] -[#green]-> MAQUINAS_ABIERTO_INICIAL
+state registrarMaquina as "registrarMaquina()" {
 
-MAQUINAS_ABIERTO_INICIAL -[#green]-> MAQUINA_ABIERTA : registrarMaquina()
-note left on link
-    <b>Supervisor solicita</b> registrar una nueva máquina.
-    <b>Sistema presenta</b> el formulario de creación.
-end note
+    state " " as RequiringData
+    state " " as ProvidingForm
+    state " " as ValidatingData
+    state c <<choice>>
 
-state MAQUINA_ABIERTA {
-    state FormularioMaquina as "Formulario de Máquina"
-    state ConfiguracionTipoTicket as "Configuración de Tipos de Ticket"
-    state ConfirmacionMaquina as "Confirmación de Máquina"
-
-    [*] -[#green]-> FormularioMaquina
-    note right of FormularioMaquina
-        <b>Supervisor introduce</b> los datos
-        de la máquina (nombre, tipoRestriccion).
-        <b>Sistema valida</b> los datos introducidos.
+    [*] -[#green]-> RequiringData
+    note on link
+    <b>Supervisor</b> solicita registrar una nueva máquina
     end note
 
-    FormularioMaquina -[#green]-> ConfiguracionTipoTicket : configurarTiposTicket()
-    note right of ConfiguracionTipoTicket
-        <b>Supervisor define</b> los tipos de ticket
-        disponibles para la máquina
-        (niño, adulto o ambos) con su precio.
-        <b>Sistema valida</b> que al menos un
-        tipo de ticket esté definido.
+    RequiringData -[#green]-> ProvidingForm
+    note on link
+    <b>Sistema</b> presenta el formulario de registro de máquina
+    • Nombre, tipoRestriccion
+    • Configuración de tipos de ticket (Niño / Adulto) y sus precios
     end note
 
-    ConfiguracionTipoTicket -[#green]-> ConfirmacionMaquina : guardarMaquina()
-    note right of ConfirmacionMaquina
-        <b>Sistema registra</b> la nueva máquina
-        con sus tipos de ticket definidos.
-        <b>Sistema deja</b> la máquina sin plaza
-        asignada hasta que se asigne explícitamente.
+    ProvidingForm -[#green]-> ValidatingData
+    note on link
+    <b>Supervisor</b> ingresa los datos y solicita guardar
     end note
 
-    ConfirmacionMaquina -[#green]-> [*]
+    ValidatingData -[#green]-> c
+    note on link
+    <b>Sistema</b> valida los datos ingresados y que al menos un tipo de ticket esté definido
+    end note
+
+    c -[#red]-> ProvidingForm
+    note on link
+    datos inválidos o faltantes
+    end note
+
+    c -[#green]-> [*]
+    note on link
+    datos válidos, máquina registrada sin plaza asignada y guardada
+    end note
 }
 
-MAQUINA_ABIERTA -[#green]-> MAQUINAS_ABIERTO_FINAL : confirmarRegistro()
-note left on link
-    <b>Sistema confirma</b> la máquina registrada
-    y regresa al listado de máquinas.
+registrarMaquina -[#green]-> MAQUINAS_ABIERTO
+note on link
+completarGestion()
 end note
 
-MAQUINA_ABIERTA -[#red]-> MAQUINAS_ABIERTO_FINAL : cancelarRegistro()
-note right on link
-    <b>CANCELAR:</b>
-    <b>Supervisor solicita</b> cancelar la operación.
-    <b>Sistema descarta</b> los datos introducidos
-    y regresa al listado de máquinas.
+registrarMaquina -[#blue]-> MAQUINAS_ABIERTO
+note on link
+cancelar registro
 end note
-
-MAQUINAS_ABIERTO_FINAL -[#blue]-> [*]
 
 @enduml

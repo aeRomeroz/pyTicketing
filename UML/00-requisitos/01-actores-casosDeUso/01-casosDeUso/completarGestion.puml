@@ -1,5 +1,4 @@
-@startuml completarGestion
-
+@startuml
 skinparam linetype polyline
 
 state completarGestion as "completarGestion()" {
@@ -16,6 +15,8 @@ state completarGestion as "completarGestion()" {
     note on link
     <b>Sistema</b> permite solicitar:
     • abrirMaquinas()
+    • abrirPlazas()
+    • abrirUsuarios()
     • abrirReportes()
     • abrirCaja()
     • abrirVentas()
@@ -31,6 +32,16 @@ state completarGestion as "completarGestion()" {
 completarGestion -[#green]-> MAQUINAS_ABIERTO
 note on link
 abrirMaquinas()
+end note
+
+completarGestion -[#green]-> PLAZAS_ABIERTO
+note on link
+abrirPlazas()
+end note
+
+completarGestion -[#green]-> USUARIOS_ABIERTO
+note on link
+abrirUsuarios()
 end note
 
 completarGestion -[#green]-> REPORTES_ABIERTO
@@ -52,5 +63,4 @@ completarGestion -[#green]-> SESION_CERRADA
 note on link
 cerrarSesion()
 end note
-
 @enduml
