@@ -11,16 +11,7 @@
 
 </div>
 
-# Sistema de Gestión de Tickets > Requisitos > Diagrama de Contexto Global
-
-## Información del artefacto
-
-- **Proyecto**: Sistema de Control y Gestión Operativa de Tickets y Plazas
-- **Fase RUP**: Inception (Inicio)
-- **Versión**: 1.0
-- **Fecha**: 2026-07-22
-- **Autor**: Equipo de desarrollo
-- **Cambios principales**: Estructuración del ciclo de vida global del sistema como máquina de estados finitos, estandarización de contenedores plurales (`-ABIERTO`) para listados y operativas in situ, y contenedores singulares (`-ABIERTA`/`-ABIERTO`) para la gestión individualizada.
+# Sistema de Gestión de Tickets - Diagrama de Contexto Global
 
 ## Introducción
 
@@ -32,7 +23,6 @@ Este documento presenta el **Diagrama de Contexto Global** del sistema. En él s
 - Especificar la navegación mediante un flujo de estados declarativo e inequívoco.
 - Hacer explícita la secuencia requerida para acceder a los distintos módulos operativos.
 - Validar la consistencia conceptual entre los Casos de Uso y sus estados de destino.
-- Garantizar la separación de responsabilidades entre el Menú Principal y los subdiagramas contenedores.
 
 ## Diagrama
 
