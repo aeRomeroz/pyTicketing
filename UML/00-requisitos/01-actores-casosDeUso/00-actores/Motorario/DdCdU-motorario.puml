@@ -1,16 +1,17 @@
-@startuml diagrama-casos-uso-motorario
+@startuml DdCdU-motorario
 
 left to right direction
 
-package "Gestión de Acceso a Máquina" {
+actor "Motorario" as motorario
 
-    actor "Motorario" as motorario
-
+package "Módulo: Reporte de Tickets" {
+    usecase iniciarReporte as "iniciarReporte()"
     usecase reportarTicketsRecibidos as "reportarTicketsRecibidos()"
-
+    usecase finalizarReporte as "finalizarReporte()"
 }
 
+motorario --> iniciarReporte
 motorario --> reportarTicketsRecibidos
-
+motorario --> finalizarReporte
 
 @enduml

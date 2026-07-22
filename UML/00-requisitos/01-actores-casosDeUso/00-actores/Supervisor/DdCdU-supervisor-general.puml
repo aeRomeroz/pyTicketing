@@ -1,28 +1,27 @@
-@startuml diagrama-general-casos-uso-supervisor
+@startuml DdCdU-supervisor-general
 
 left to right direction
-skinparam packageStyle rectangle
 
 actor "Supervisor" as supervisor
 
-package "Gestión De Máquinas" {
-    usecase consultarMaquina as "consultarMaquina()"
+package "Módulo: Gestión de Máquinas" {
     usecase registrarMaquina as "registrarMaquina()"
+    usecase consultarMaquina as "consultarMaquina()"
     usecase editarMaquina as "editarMaquina()"
     usecase darDeBajaMaquina as "darDeBajaMaquina()"
-    usecase darDeAltaMaquina as "darDeAltaMaquina()"
-    
+    usecase reactivarMaquina as "reactivarMaquina()"
+
     usecase asignarMotorarioAMaquina as "asignarMotorarioAMaquina()"
-    usecase desasignarMotorarioAMaquina as "desasignarMotorarioAMaquina()"
+    usecase desasignarMotorarioDeMaquina as "desasignarMotorarioDeMaquina()"
 }
 
-package "Gestión De Plazas" {
-    usecase consultarPlaza as "consultarPlaza()"
+package "Módulo: Gestión de Plazas" {
     usecase registrarPlaza as "registrarPlaza()"
+    usecase consultarPlaza as "consultarPlaza()"
     usecase editarPlaza as "editarPlaza()"
     usecase darDeBajaPlaza as "darDeBajaPlaza()"
-    usecase darDeAltaPlaza as "darDeAltaPlaza()"
-    
+    usecase reactivarPlaza as "reactivarPlaza()"
+
     usecase asignarMaquinaAPlaza as "asignarMaquinaAPlaza()"
     usecase desasignarMaquinaDePlaza as "desasignarMaquinaDePlaza()"
 
@@ -30,35 +29,37 @@ package "Gestión De Plazas" {
     usecase desasignarTaquilleroDePlaza as "desasignarTaquilleroDePlaza()"
 }
 
-package "Gestión De Ventas" {
-    usecase revisarCierreDeCaja as "revisarCierreDeCaja()"
-    usecase autorizarReembolso as "autorizarReembolso()"
+package "Módulo: Gestión de Ventas y Caja" {
     usecase anularVenta as "anularVenta()"
+    usecase autorizarReembolso as "autorizarReembolso()"
+    usecase revisarCierreDeCaja as "revisarCierreDeCaja()"
+    usecase consolidarCierreDeCaja as "consolidarCierreDeCaja()"
 }
 
 ' --- Conexiones Gestión de Máquinas ---
-supervisor -- consultarMaquina
-supervisor -- registrarMaquina
-supervisor -- editarMaquina
-supervisor -- darDeBajaMaquina
-supervisor -- darDeAltaMaquina
-supervisor -- asignarMotorarioAMaquina
-supervisor -- desasignarMotorarioAMaquina
+supervisor --> registrarMaquina
+supervisor --> consultarMaquina
+supervisor --> editarMaquina
+supervisor --> darDeBajaMaquina
+supervisor --> reactivarMaquina
+supervisor --> asignarMotorarioAMaquina
+supervisor --> desasignarMotorarioDeMaquina
 
 ' --- Conexiones Gestión de Plazas ---
-supervisor -- consultarPlaza
-supervisor -- registrarPlaza
-supervisor -- editarPlaza
-supervisor -- darDeBajaPlaza
-supervisor -- darDeAltaPlaza
-supervisor -- asignarMaquinaAPlaza
-supervisor -- desasignarMaquinaDePlaza
-supervisor -- asignarTaquilleroAPlaza
-supervisor -- desasignarTaquilleroDePlaza
+supervisor --> registrarPlaza
+supervisor --> consultarPlaza
+supervisor --> editarPlaza
+supervisor --> darDeBajaPlaza
+supervisor --> reactivarPlaza
+supervisor --> asignarMaquinaAPlaza
+supervisor --> desasignarMaquinaDePlaza
+supervisor --> asignarTaquilleroAPlaza
+supervisor --> desasignarTaquilleroDePlaza
 
-' --- Conexiones Gestión de Ventas ---
-supervisor -- revisarCierreDeCaja
-supervisor -- autorizarReembolso
-supervisor -- anularVenta
+' --- Conexiones Gestión de Ventas y Caja ---
+supervisor --> anularVenta
+supervisor --> autorizarReembolso
+supervisor --> revisarCierreDeCaja
+supervisor --> consolidarCierreDeCaja
 
 @enduml

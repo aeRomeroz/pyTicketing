@@ -1,19 +1,19 @@
-@startuml diagrama-casos-uso-supervisor-gestion-de-ventas
+@startuml DdCdU-supervisor-gestion-de-ventas
 
 left to right direction
 
-package "Gestión De Ventas" {
+actor "Supervisor" as supervisor
 
-    actor "Supervisor" as supervisor
-    
-    usecase revisarCierreDeCaja as "revisarCierreDeCaja()"
-    usecase autorizarReembolso as "autorizarReembolso()"
+package "Módulo: Gestión de Ventas y Caja" {
     usecase anularVenta as "anularVenta()"
- 
+    usecase autorizarReembolso as "autorizarReembolso()"
+    usecase revisarCierreDeCaja as "revisarCierreDeCaja()"
+    usecase consolidarCierreDeCaja as "consolidarCierreDeCaja()"
 }
 
-supervisor --> revisarCierreDeCaja
-supervisor --> autorizarReembolso
 supervisor --> anularVenta
+supervisor --> autorizarReembolso
+supervisor --> revisarCierreDeCaja
+supervisor --> consolidarCierreDeCaja
 
 @enduml
