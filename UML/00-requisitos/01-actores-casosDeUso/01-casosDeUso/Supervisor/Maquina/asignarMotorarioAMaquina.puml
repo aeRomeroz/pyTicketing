@@ -44,7 +44,7 @@ note on link
 completarGestion()
 end note
 
-asignarMotorarioAMaquina -[#red]-> MAQUINAS_ABIERTO
+asignarMotorarioAMaquina -[#blue]-> MAQUINAS_ABIERTO
 note on link
 cancelar asignación
 end note

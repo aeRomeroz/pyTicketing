@@ -1,0 +1,78 @@
+@startuml abrirMaquinas
+
+skinparam linetype polyline
+
+state abrirMaquinas as "abrirMaquinas()" {
+
+    state " " as MostrandoLista
+    state " " as FiltrandoLista
+
+    [*] -[#green]-> MostrandoLista
+    note on link
+    <b>Usuario</b> solicita abrir gestión de máquinas
+    end note
+
+    MostrandoLista -[#green]-> FiltrandoLista
+    note on link
+    <b>Sistema</b> presenta lista de máquinas
+    • Número, plaza asignada, estado operativo, motorario asignado
+    • Permite solicitar buscar/filtrar máquinas
+    • Permite solicitar registrar nueva máquina
+    • Permite solicitar consultar/editar máquina
+    • Permite solicitar dar de baja / reactivar máquina
+    • Permite solicitar asignar / desasignar motorario
+    end note
+
+    FiltrandoLista <-[#green]- FiltrandoLista
+    note on link
+    <b>Usuario</b> solicita filtrar lista
+    <b>Sistema</b> presenta lista filtrada
+    end note
+
+    FiltrandoLista -[#green]-> [*]
+    note on link
+    <b>Usuario</b> solicita una de las opciones
+    end note
+}
+
+abrirMaquinas -[#green]-> MAQUINA_ABIERTA
+note on link
+consultarMaquina()
+end note
+
+abrirMaquinas -[#green]-> MAQUINA_ABIERTA
+note on link
+editarMaquina()
+end note
+
+abrirMaquinas -[#green]-> MAQUINA_ABIERTA
+note on link
+registrarMaquina()
+end note
+
+abrirMaquinas -[#green]-> MAQUINAS_ABIERTO
+note on link
+darDeBajaMaquina()
+end note
+
+abrirMaquinas -[#green]-> MAQUINAS_ABIERTO
+note on link
+reactivarMaquina()
+end note
+
+abrirMaquinas -[#green]-> MAQUINAS_ABIERTO
+note on link
+asignarMotorarioAMaquina()
+end note
+
+abrirMaquinas -[#green]-> MAQUINAS_ABIERTO
+note on link
+desasignarMotorarioDeMaquina()
+end note
+
+abrirMaquinas -[#green]-> SISTEMA_DISPONIBLE
+note on link
+completarGestion()
+end note
+
+@enduml

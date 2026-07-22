@@ -1,0 +1,44 @@
+@startuml abrirCaja
+
+skinparam linetype polyline
+
+state abrirCaja as "abrirCaja()" {
+
+    state " " as MostrandoEstado
+    state " " as EsperandoAccion
+
+    [*] -[#green]-> MostrandoEstado
+    note on link
+    <b>Usuario</b> solicita abrir gestión de caja
+    end note
+
+    MostrandoEstado -[#green]-> EsperandoAccion
+    note on link
+    <b>Sistema</b> presenta estado de la caja
+    • Saldo de apertura, total recaudado y resumen de ventas
+    • Permite solicitar revisar cierre de caja
+    • Permite solicitar consolidar cierre de caja
+    end note
+
+    EsperandoAccion -[#green]-> [*]
+    note on link
+    <b>Usuario</b> solicita una de las opciones
+    end note
+}
+
+abrirCaja -[#green]-> CAJA_ABIERTA
+note on link
+revisarCierreDeCaja()
+end note
+
+abrirCaja -[#green]-> CAJA_ABIERTA
+note on link
+consolidarCierreDeCaja()
+end note
+
+abrirCaja -[#green]-> SISTEMA_DISPONIBLE
+note on link
+completarGestion()
+end note
+
+@enduml

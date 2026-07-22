@@ -7,108 +7,108 @@ state "SESION_CERRADA" as NoAuth
 state "SISTEMA_DISPONIBLE" as Menu
 
 state "MAQUINAS_ABIERTO" as ListMaquinas
-state "MAQUINA_ABIERTO" as EditMaquina
+state "MAQUINA_ABIERTA" as EditMaquina
 
 state "PLAZAS_ABIERTO" as ListPlazas
-state "PLAZA_ABIERTO" as EditPlaza
-
-state "VENTAS_ABIERTO" as ListVentas
-state "VENTA_ABIERTO" as EditVenta
-
-state "REEMBOLSOS_ABIERTO" as ListReembolsos
-state "REEMBOLSO_ABIERTO" as EditReembolso
-
-state "CIERRES_ABIERTO" as ListCierres
-state "CIERRE_ABIERTO" as EditCierre
+state "PLAZA_ABIERTA" as EditPlaza
 
 state "USUARIOS_ABIERTO" as ListUsuarios
 state "USUARIO_ABIERTO" as EditUsuario
 
+state "REPORTES_ABIERTO" as ListReportes
+state "REPORTE_ABIERTO" as EditReporte
+
+state "CAJA_ABIERTA" as EditCaja
+
+state "VENTAS_ABIERTO" as ListVentas
+state "VENTA_ABIERTA" as EditVenta
+
 
 [*] --> NoAuth
 
+' Autenticación
 NoAuth --> Menu : iniciarSesion()
 Menu --> NoAuth : cerrarSesion()
 
 ' Navegación desde el Menú Principal
 Menu --> ListMaquinas: abrirMaquinas()
 Menu --> ListPlazas: abrirPlazas()
-Menu --> ListVentas: abrirVentas()
-Menu --> ListCierres: abrirCierres()
-Menu --> ListReembolsos: abrirReembolsos()
 Menu --> ListUsuarios: abrirUsuarios()
+Menu --> ListReportes: abrirReportes()
+Menu --> EditCaja: abrirCaja()
+Menu --> ListVentas: abrirVentas()
 
 
-'MÓDULO: MÁQUINAS (Gestión y Asignación de Personal)
-ListMaquinas --> EditMaquina: registrarMaquina()
+' MÓDULO: MÁQUINAS
+ListMaquinas --> EditMaquina: consultarMaquina()
 ListMaquinas --> EditMaquina: editarMaquina()
-ListMaquinas --> ListMaquinas: eliminarMaquina()
+ListMaquinas --> EditMaquina: registrarMaquina()
+
+ListMaquinas --> ListMaquinas: darDeBajaMaquina()
+ListMaquinas --> ListMaquinas: reactivarMaquina()
+ListMaquinas --> ListMaquinas: asignarMotorarioAMaquina()
+ListMaquinas --> ListMaquinas: desasignarMotorarioDeMaquina()
 
 EditMaquina --> EditMaquina: editarMaquina()
-EditMaquina --> EditMaquina: asignarMotorarioAMaquina()
-EditMaquina --> EditMaquina: desasignarMotorarioDeMaquina()
 EditMaquina --> ListMaquinas: abrirMaquinas()
 
 
-' MÓDULO: PLAZAS (Gestión y Asignación de Control de Motorarios)
-ListPlazas --> EditPlaza: registrarPlaza()
+' MÓDULO: PLAZAS
+ListPlazas --> EditPlaza: consultarPlaza()
 ListPlazas --> EditPlaza: editarPlaza()
-ListPlazas --> ListPlazas: eliminarPlaza()
+ListPlazas --> EditPlaza: registrarPlaza()
+
+ListPlazas --> ListPlazas: darDeBajaPlaza()
+ListPlazas --> ListPlazas: reactivarPlaza()
+ListPlazas --> ListPlazas: asignarMaquinaAPlaza()
+ListPlazas --> ListPlazas: desasignarMaquinaDePlaza()
+ListPlazas --> ListPlazas: asignarTaquilleroAPlaza()
+ListPlazas --> ListPlazas: desasignarTaquilleroDePlaza()
 
 EditPlaza --> EditPlaza: editarPlaza()
-EditPlaza --> EditPlaza: asignarTaquilleroAPlaza()
-EditPlaza --> EditPlaza: desasignarTaquilleroDePlaza()
-EditPlaza --> EditPlaza: asignarMaquinaAPlaza()
-EditPlaza --> EditPlaza: desasignarMaquinaDePlaza()
 EditPlaza --> ListPlazas: abrirPlazas()
 
 
-' MÓDULO: VENTAS (Integridad Contable)
-ListVentas --> EditVenta: registrarVenta()
-ListVentas -->  EditVenta: consultarVenta()
-
-EditVenta --> ListVentas: anularVenta()
-EditVenta --> ListVentas: abrirVentas()
-
-
-' MÓDULO: REEMBOLSOS
-ListReembolsos --> EditReembolso: solicitarReembolso()
-ListReembolsos --> EditReembolso: revisarReembolso()
-
-EditReembolso --> ListReembolsos: procesarReembolso()
-EditReembolso --> ListReembolsos: abrirReembolsos()
-
-
-' MÓDULO: CIERRES DE CAJA (Flujo de Auditoría)
-' Declaración inicial (Taquillero)
-ListCierres --> EditCierre: registrarCierreDeCaja()
-' Auditoría/Revisión (Supervisor)
-ListCierres --> EditCierre: revisarCierreDeCaja()
-' Corrección de rechazo (Taquillero)
-ListCierres --> EditCierre: editarCierreDeCaja()
-' Guardar decisión (Aprobar/Devolver)
-EditCierre --> ListCierres: procesarCierre()
-
-EditCierre --> ListCierres: abrirCierres()
-
-
-' MÓDULO: USUARIOS (Baja lógica integrada en Edición)
-ListUsuarios --> EditUsuario: registrarUsuario()
-ListUsuarios --> EditUsuario: editarUsuario()
+' MÓDULO: USUARIOS
 ListUsuarios --> EditUsuario: consultarUsuario()
+ListUsuarios --> EditUsuario: editarUsuario()
+ListUsuarios --> EditUsuario: crearUsuario()
+
+ListUsuarios --> ListUsuarios: desactivarUsuario()
+ListUsuarios --> ListUsuarios: reactivarUsuario()
 
 EditUsuario --> EditUsuario: editarUsuario()
 EditUsuario --> ListUsuarios: abrirUsuarios()
 
 
-' Retorno al Menú Principal
+' MÓDULO: REPORTES DE MOTORARIO
+ListReportes --> EditReporte: iniciarReporte()
+
+EditReporte --> EditReporte: reportarTicketsRecibidos()
+EditReporte --> ListReportes: finalizarReporte()
+
+
+' MÓDULO: CAJA
+EditCaja --> EditCaja: revisarCierreDeCaja()
+EditCaja --> EditCaja: consolidarCierreDeCaja()
+
+
+' MÓDULO: VENTAS
+ListVentas --> EditVenta: registrarVenta()
+
+ListVentas --> ListVentas: solicitarAnulacionVenta()
+ListVentas --> ListVentas: anularVenta()
+ListVentas --> ListVentas: autorizarReembolso()
+
+EditVenta --> ListVentas: abrirVentas()
+
+
+' Retorno al Menú Principal (completarGestion)
 ListMaquinas --> Menu: completarGestion()
-ListPlazas --> Menu : completarGestion()
-ListVentas --> Menu : completarGestion()
-ListCierres --> Menu: completarGestion()
-ListReembolsos --> Menu: completarGestion()
+ListPlazas --> Menu: completarGestion()
 ListUsuarios --> Menu: completarGestion()
-
-
+ListReportes --> Menu: completarGestion()
+EditCaja --> Menu: completarGestion()
+ListVentas --> Menu: completarGestion()
 
 @enduml
