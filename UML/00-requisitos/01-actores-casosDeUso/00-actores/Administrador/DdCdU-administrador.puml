@@ -1,17 +1,15 @@
-@startuml diagrama-casos-uso-administrador
+@startuml DdCdU-administrador
 
 left to right direction
 
-package "Gestión De Usuarios" {
+actor "Administrador" as administrador
 
-    actor "Administrador" as administrador
-
+package "Módulo: Gestión de Usuarios" {
     usecase crearUsuario as "crearUsuario()"
     usecase consultarUsuario as "consultarUsuario()"
     usecase editarUsuario as "editarUsuario()"
     usecase desactivarUsuario as "desactivarUsuario()"
     usecase reactivarUsuario as "reactivarUsuario()"
- 
 }
 
 administrador --> crearUsuario

@@ -9,19 +9,22 @@
   class Venta
   class Ticket
   class CierreDeCaja
+  class ReporteDeTickets
   
   Plaza o-- Maquina
   
-  Maquina --> Motorario : operada por
+  Maquina --> Motorario : asignada a
+  Motorario --> ReporteDeTickets : genera
   Ticket --> Maquina : corresponde a
+  ReporteDeTickets o-- Ticket
   
-  Taquillero --> Plaza : se asigna a
+  Taquillero --> Plaza : asignado a
   Taquillero --> Venta : registra
   Venta *-- Ticket
   
-  CierreDeCaja --> Venta : consolida
+  CierreDeCaja --> Venta : consolida/audita
   Taquillero --> CierreDeCaja : realiza
-  Supervisor --> CierreDeCaja : revisa/confirma
+  Supervisor --> CierreDeCaja : revisa/consolida
   
   Supervisor --> Plaza : da de alta/baja
   Supervisor --> Maquina : da de alta/baja

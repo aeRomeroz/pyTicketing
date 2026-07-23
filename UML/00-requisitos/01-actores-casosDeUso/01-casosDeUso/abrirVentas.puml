@@ -1,0 +1,61 @@
+@startuml abrirVentas
+
+skinparam linetype polyline
+
+state abrirVentas as "abrirVentas()" {
+
+    state " " as MostrandoLista
+    state " " as FiltrandoLista
+
+    [*] -[#green]-> MostrandoLista
+    note on link
+    <b>Usuario</b> solicita abrir módulo de ventas
+    end note
+
+    MostrandoLista -[#green]-> FiltrandoLista
+    note on link
+    <b>Sistema</b> presenta historial y terminal de ventas
+    • Folio, fecha, monto, método de pago y estado de la venta
+    • Permite al <b>Taquillero</b> solicitar registrar venta o solicitar anulación
+    • Permite al <b>Supervisor</b> solicitar anular venta o autorizar reembolso
+    • Permite filtrar el historial de ventas
+    end note
+
+    FiltrandoLista <-[#green]- FiltrandoLista
+    note on link
+    <b>Usuario</b> solicita filtrar lista
+    <b>Sistema</b> presenta lista filtrada
+    end note
+
+    FiltrandoLista -[#green]-> [*]
+    note on link
+    <b>Usuario</b> solicita una de las opciones
+    end note
+}
+
+abrirVentas -[#green]-> VENTA_ABIERTA
+note on link
+registrarVenta()
+end note
+
+abrirVentas -[#green]-> VENTAS_ABIERTO
+note on link
+solicitarAnulacionVenta()
+end note
+
+abrirVentas -[#green]-> VENTAS_ABIERTO
+note on link
+anularVenta()
+end note
+
+abrirVentas -[#green]-> VENTAS_ABIERTO
+note on link
+autorizarReembolso()
+end note
+
+abrirVentas -[#green]-> SISTEMA_DISPONIBLE
+note on link
+completarGestion()
+end note
+
+@enduml

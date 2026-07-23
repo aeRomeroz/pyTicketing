@@ -1,0 +1,89 @@
+@startuml abrirPlazas
+
+skinparam linetype polyline
+
+state abrirPlazas as "abrirPlazas()" {
+
+    state " " as MostrandoLista
+    state " " as FiltrandoLista
+
+    [*] -[#green]-> MostrandoLista
+    note on link
+    <b>Usuario</b> solicita abrir gestión de plazas
+    end note
+
+    MostrandoLista -[#green]-> FiltrandoLista
+    note on link
+    <b>Sistema</b> presenta lista de plazas
+    • Código, nombre, ubicación y estado
+    • Permite solicitar buscar/filtrar plazas
+    • Permite solicitar registrar nueva plaza
+    • Permite solicitar consultar/editar plaza
+    • Permite solicitar dar de baja / reactivar plaza
+    • Permite solicitar asignar / desasignar máquina
+    • Permite solicitar asignar / desasignar taquillero
+    end note
+
+    FiltrandoLista <-[#green]- FiltrandoLista
+    note on link
+    <b>Usuario</b> solicita filtrar lista
+    <b>Sistema</b> presenta lista filtrada
+    end note
+
+    FiltrandoLista -[#green]-> [*]
+    note on link
+    <b>Usuario</b> solicita una de las opciones
+    end note
+}
+
+abrirPlazas -[#green]-> PLAZA_ABIERTA
+note on link
+consultarPlaza()
+end note
+
+abrirPlazas -[#green]-> PLAZA_ABIERTA
+note on link
+editarPlaza()
+end note
+
+abrirPlazas -[#green]-> PLAZA_ABIERTA
+note on link
+registrarPlaza()
+end note
+
+abrirPlazas -[#green]-> PLAZAS_ABIERTO
+note on link
+darDeBajaPlaza()
+end note
+
+abrirPlazas -[#green]-> PLAZAS_ABIERTO
+note on link
+reactivarPlaza()
+end note
+
+abrirPlazas -[#green]-> PLAZAS_ABIERTO
+note on link
+asignarMaquinaAPlaza()
+end note
+
+abrirPlazas -[#green]-> PLAZAS_ABIERTO
+note on link
+desasignarMaquinaDePlaza()
+end note
+
+abrirPlazas -[#green]-> PLAZAS_ABIERTO
+note on link
+asignarTaquilleroAPlaza()
+end note
+
+abrirPlazas -[#green]-> PLAZAS_ABIERTO
+note on link
+desasignarTaquilleroDePlaza()
+end note
+
+abrirPlazas -[#green]-> SISTEMA_DISPONIBLE
+note on link
+completarGestion()
+end note
+
+@enduml

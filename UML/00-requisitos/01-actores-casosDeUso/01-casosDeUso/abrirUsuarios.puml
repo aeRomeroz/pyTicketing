@@ -1,0 +1,67 @@
+@startuml abrirUsuarios
+
+skinparam linetype polyline
+
+state abrirUsuarios as "abrirUsuarios()" {
+
+    state " " as MostrandoLista
+    state " " as FiltrandoLista
+
+    [*] -[#green]-> MostrandoLista
+    note on link
+    <b>Usuario</b> solicita abrir gestión de usuarios
+    end note
+
+    MostrandoLista -[#green]-> FiltrandoLista
+    note on link
+    <b>Sistema</b> presenta lista de usuarios
+    • Nombre, usuario, rol y estado (activo/inactivo)
+    • Permite solicitar buscar/filtrar usuarios
+    • Permite solicitar crear nuevo usuario
+    • Permite solicitar consultar/editar usuario
+    • Permite solicitar desactivar / reactivar usuario
+    end note
+
+    FiltrandoLista <-[#green]- FiltrandoLista
+    note on link
+    <b>Usuario</b> solicita filtrar lista
+    <b>Sistema</b> presenta lista filtrada
+    end note
+
+    FiltrandoLista -[#green]-> [*]
+    note on link
+    <b>Usuario</b> solicita una de las opciones
+    end note
+}
+
+abrirUsuarios -[#green]-> USUARIO_ABIERTO
+note on link
+consultarUsuario()
+end note
+
+abrirUsuarios -[#green]-> USUARIO_ABIERTO
+note on link
+editarUsuario()
+end note
+
+abrirUsuarios -[#green]-> USUARIO_ABIERTO
+note on link
+crearUsuario()
+end note
+
+abrirUsuarios -[#green]-> USUARIOS_ABIERTO
+note on link
+desactivarUsuario()
+end note
+
+abrirUsuarios -[#green]-> USUARIOS_ABIERTO
+note on link
+reactivarUsuario()
+end note
+
+abrirUsuarios -[#green]-> SISTEMA_DISPONIBLE
+note on link
+completarGestion()
+end note
+
+@enduml
