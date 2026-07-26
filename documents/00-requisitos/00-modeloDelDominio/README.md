@@ -22,9 +22,12 @@ Este documento describe el modelo conceptual del dominio para el Sistema Gestion
 
 ## Diagrama del Modelo del Dominio
 
-![Modelo del Dominio](../../../images/00-requisitos/00-modeloDelDominio/modelo-del-dominio.svg)
+> [Modelo del Dominio - Aproximación 1](../../../images/00-requisitos/00-modeloDelDominio/modelo-del-dominio.svg)  
+> [==> Ver código fuente (PlantUML)](../../../UML/00-requisitos/00-modeloDelDominio/modelo-del-dominio.puml)
 
-> [Ver código fuente (PlantUML)](../../../UML/00-requisitos/00-modeloDelDominio/modelo-del-dominio.puml)
+![Modelo del Dominio](../../../images/00-requisitos/00-modeloDelDominio/v2-modelo-del-dominio.svg)
+> [Ver código fuente (PlantUML)](../../../UML/00-requisitos/00-modeloDelDominio/v2-modelo-del-dominio.puml)
+
 
 ## Problema que resuelve
 El sistema garantiza la **trazabilidad financiera y operativa** asegurando que:

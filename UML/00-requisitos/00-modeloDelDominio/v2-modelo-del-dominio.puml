@@ -1,0 +1,40 @@
+@startuml diagrama-modelo-del-dominio
+
+' --- Entidades Institucionales / Estaciones ---
+class Gerencia
+class Taquilla
+class ControlAcceso
+class Operador
+
+' --- Entidades del Parque y Equipamiento ---
+class Plaza
+class Maquina
+
+' --- Entidades Comerciales y de Operación ---
+class Visitante
+class Transaccion
+class Ticket
+class Caja
+
+' --- Estructura y Asignaciones ---
+Plaza o-- Maquina : alberga
+Plaza o-- Taquilla : contiene
+ControlAcceso --> Maquina : opera en
+Operador --> ControlAcceso : asignado a
+
+' --- Flujo Comercial y Visitante ---
+Visitante --> Transaccion : realiza
+Taquilla --> Transaccion : procesa
+Transaccion *-- Ticket : compone
+ControlAcceso --> Ticket : valida
+Ticket --> Maquina : corresponde a
+
+' --- Flujo Financiero y de Gobernanza ---
+Taquilla --> Caja : opera
+Caja o-- Transaccion : consolida
+Gerencia --> Caja : audita
+Gerencia --> Plaza : gestiona
+Gerencia --> Maquina : administra
+Gerencia --> Operador : gestiona
+
+@enduml
